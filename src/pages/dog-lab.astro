@@ -1,0 +1,57 @@
+---
+// 犬の造形・ポーズを一覧で確認する開発用ページ（sitemapからは除外・noindex）
+import DogSvg from '../components/DogSvg.astro';
+const poses = ['stand', 'walk', 'run', 'stalk', 'sniff', 'dig', 'stretch', 'howl'];
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>dog lab</title>
+    <style>
+      body { background: #faf6ef; font-family: sans-serif; margin: 20px; }
+      .cell { display: inline-block; margin: 6px; border: 1px dashed #bbb; }
+      .cell p { text-align: center; margin: 2px; font-size: 12px; color: #666; }
+      svg { display: block; }
+      .baseline { stroke: #c9b; stroke-width: 1; }
+    </style>
+  </head>
+  <body>
+    {poses.map((p) => (
+      <div class="cell">
+        <p>{p}</p>
+        <svg width="330" height="240" viewBox="-175 -215 350 240" data-pose={p}>
+          <line class="baseline" x1="-175" y1="1" x2="175" y2="1"></line>
+          <DogSvg />
+        </svg>
+      </div>
+    ))}
+    <script>
+      type Pose = Partial<Record<'neck' | 'tail' | 'body' | 'bodyY' | 'lf' | 'rf' | 'lb' | 'rb' | 'ear', number>>;
+      const POSES: Record<string, Pose> = {
+        stand: { tail: -10, lf: 2, rf: -3, lb: 1, rb: -2 },
+        walk: { neck: 6, tail: -8, lf: 18, rb: 14, rf: -18, lb: -14 },
+        run: { neck: 10, tail: -16, bodyY: -4, lf: 34, rb: 26, rf: -30, lb: -24 },
+        stalk: { neck: 24, bodyY: 7, tail: 2, lf: 6, rf: -6, lb: 4, rb: -4 },
+        sniff: { neck: 46, tail: -6, lf: 2, rf: -3 },
+        dig: { neck: 50, body: 6, bodyY: 3, tail: -34, lf: -36, rf: 8, lb: 4, rb: -4 },
+        stretch: { body: 13, neck: -16, tail: -38, lf: 26, rf: 22 },
+        howl: { neck: -38, tail: -14 },
+      };
+      document.querySelectorAll<SVGSVGElement>('svg[data-pose]').forEach((svg) => {
+        const pose = POSES[svg.dataset.pose!] ?? {};
+        const q = (name: string) => svg.querySelector<SVGGraphicsElement>(`[data-part="${name}"]`)!;
+        const v = (key: keyof Pose) => pose[key] ?? 0;
+        q('inner').setAttribute('transform', `rotate(${v('body')} 40 0) translate(0 ${v('bodyY')})`);
+        q('neck').setAttribute('transform', `rotate(${v('neck')} 46 -122)`);
+        q('ear').setAttribute('transform', `rotate(${v('ear')} 88 -184)`);
+        q('tail').setAttribute('transform', `rotate(${v('tail')} -80 -118)`);
+        q('leg-lf').setAttribute('transform', `rotate(${v('lf')} 36 -108)`);
+        q('leg-rf').setAttribute('transform', `translate(-15 0) rotate(${v('rf')} 36 -108)`);
+        q('leg-lb').setAttribute('transform', `rotate(${v('lb')} -60 -108)`);
+        q('leg-rb').setAttribute('transform', `translate(13 0) rotate(${v('rb')} -60 -108)`);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations, localizePath } from '../../i18n/utils';
+import { career, skills, moonshots, hobbies, pick } from '../../data/profile';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const projects = (await getCollection('projects', (e) => e.id.startsWith(`${lang}/`)))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<h1 class="page-title">{t('about.title')}</h1>
+<p class="page-lead">{t('about.lead')}</p>
+
+{/* ===== 短い版 ===== */}
+<section class="section" aria-labelledby="about-short">
+  <h2 class="section-title" id="about-short">{t('about.short')}<span class="sub">Short ver.</span></h2>
+  <p class="section-note">{t('about.shortNote')}</p>
+
+  <h3 style="margin-bottom:0.8em">{t('about.career')}</h3>
+  <ol class="timeline">
+    {career.map((c) => (
+      <li class:list={[{ hl: c.highlight, now: c.date === 'now' }]}>
+        <span class="date">{c.date === 'now' ? t('about.careerNow') : c.date}</span>
+        <span class="desc">
+          {lang === 'ja' ? c.ja : c.en}
+          {c.link && (
+            <>
+              {' '}<a href={c.link} target="_blank" rel="noopener">↗</a>
+            </>
+          )}
+        </span>
+      </li>
+    ))}
+  </ol>
+
+  <h3 style="margin:1.6em 0 0.8em">{t('nav.projects')}</h3>
+  <p class="section-note">{t('about.projectsNote')}</p>
+  <div class="cards">
+    {projects.map((p) => {
+      const slug = p.id.replace(`${lang}/`, '');
+      return (
+        <a class="card" href={localizePath(`/projects/${slug}`, lang)}>
+          <div class="card-head">
+            <h3>{p.data.title}</h3>
+            <span class={`badge badge-${p.data.status}`}>{t(`projects.status.${p.data.status}`)}</span>
+          </div>
+          <p>{p.data.summary}</p>
+        </a>
+      );
+    })}
+  </div>
+</section>
+
+{/* ===== 長い版 ===== */}
+<section class="section" aria-labelledby="about-long">
+  <h2 class="section-title" id="about-long">{t('about.long')}<span class="sub">Long ver.</span></h2>
+  <p class="section-note">{t('about.longNote')}</p>
+
+  <section class="section" aria-labelledby="philosophy">
+    <h3 class="section-title" id="philosophy" style="font-size:1.1rem">{t('about.philosophy')}<span class="sub">Philosophy</span></h3>
+    <p class="philosophy-quote"><em>{t('about.philosophyQuote')}</em></p>
+    <p>{t('about.philosophyBody')}</p>
+  </section>
+
+  <section class="section" aria-labelledby="skills">
+    <h3 class="section-title" id="skills" style="font-size:1.1rem">{t('about.skills')}<span class="sub">Skills</span></h3>
+    <p class="section-note">{t('about.skillsNote')}</p>
+    <div class="skill-grid">
+      {skills.map((s) => (
+        <div class="skill">
+          <h3>{pick(s.title, lang)}</h3>
+          <p>{pick(s.body, lang)}</p>
+          <div class="tags">{s.tags.map((tag) => <span>{tag}</span>)}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="moonshots">
+    <h3 class="section-title" id="moonshots" style="font-size:1.1rem">{t('about.moonshots')}<span class="sub">Moonshots</span></h3>
+    <p class="section-note">{t('about.moonshotsNote')}</p>
+    <div class="moonshots">
+      {moonshots.map((m) => (
+        <div class="moonshot">
+          <h3>{pick(m.title, lang)}</h3>
+          <ol>
+            {m.milestones.map((ms) => (
+              <li class:list={[{ done: ms.done, current: ms.current }]}>{pick(ms.label, lang)}</li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="hobbies">
+    <h3 class="section-title" id="hobbies" style="font-size:1.1rem">{t('about.hobbies')}<span class="sub">Favorites</span></h3>
+    <ul class="hobbies">
+      {hobbies.map((h) => (
+        <li>
+          <b>{pick(h.label, lang)}</b>
+          {h.note && <small>{pick(h.note, lang)}</small>}
+        </li>
+      ))}
+    </ul>
+  </section>
+</section>

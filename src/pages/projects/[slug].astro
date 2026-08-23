@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectPost from '../../components/bodies/ProjectPost.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects', (e) => e.id.startsWith('ja/'));
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace(/^ja\//, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<Base title={entry.data.title} description={entry.data.summary}>
+  <ProjectPost lang="ja" entry={entry} />
+</Base>

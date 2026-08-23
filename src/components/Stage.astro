@@ -1,0 +1,16 @@
+---
+import DogSvg from './DogSvg.astro';
+---
+{/*
+  影絵の舞台。transition:persist によりページ遷移をまたいで
+  犬・ボールの状態（DOMノードとJS状態）が維持される。
+*/}
+<div class="stage" id="stage" transition:persist="dog-stage">
+  <svg class="stage-svg" id="stage-svg" aria-hidden="true" focusable="false">
+    <g data-part="bones"></g>
+    <circle data-part="ball" r="8" fill="var(--accent)" cx="-100" cy="-100"></circle>
+    <DogSvg />
+    <g data-part="dirt"></g>
+  </svg>
+  <div class="grass" aria-hidden="true"></div>
+</div>
