@@ -16,7 +16,7 @@ const projects = (await getCollection('projects', (e) => e.id.startsWith(`${lang
 <section class="hero">
   <div>
     <h1 class="hero-name" translate="no">
-      片原 佑介
+      片原 悠介
       <span class="latin">YUSUKE KATAHARA</span>
     </h1>
     <p class="hero-role">{t('home.role')}</p>
@@ -24,7 +24,7 @@ const projects = (await getCollection('projects', (e) => e.id.startsWith(`${lang
     <p class="hero-note"><b>BIG DOG DIG</b> — {t('home.nameNote')}</p>
   </div>
   <figure class="polaroid hero-photo">
-    <Image src={photo} alt={lang === 'ja' ? '片原佑介のプロフィール写真' : 'Profile photo of Yusuke Katahara'} width={460} densities={[1, 2]} />
+    <Image src={photo} alt={lang === 'ja' ? '片原悠介のプロフィール写真' : 'Profile photo of Yusuke Katahara'} width={460} densities={[1, 2]} />
     <figcaption>{t('home.photoCaption')}</figcaption>
   </figure>
 </section>

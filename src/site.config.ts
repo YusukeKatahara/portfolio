@@ -1,10 +1,7 @@
 // サイト全体の設定。公開前にここだけ確認すればよいように一箇所へ集約。
 
-// Web3Forms のアクセスキー（https://web3forms.com で無料発行、メールアドレスを入れるだけ）。
-// 発行したキーに差し替えるとお問い合わせフォームが有効になる。
-// 差し替えるまでフォームは「準備中」表示になる。
 // ※アクセスキーはクライアント公開前提の仕様（メールアドレス自体は公開されない）。
-export const WEB3FORMS_ACCESS_KEY = 'REPLACE_WITH_YOUR_ACCESS_KEY';
+export const WEB3FORMS_ACCESS_KEY = '36a5dd56-23cf-4399-8b5b-62a88a3d7dc0';
 
 export const SOCIAL = {
   github: 'https://github.com/YusukeKatahara',

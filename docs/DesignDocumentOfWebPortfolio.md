@@ -18,7 +18,7 @@ This is a design document of web portfolio.
     - changing page: if user clicks any navigation bar, the dog performs digging there. after that, the page will change.  <!--I have no idea of animation opening new page. it need natural transition from the previous page-->
 - special mouse cursor so that users don't miss it
 - 99% monochrome, 1% bright color as spices
-- shadow pappet <!-- I like Fujishiro Seiji's art products. -->
+- shadow pappet
 
 ## Language
 

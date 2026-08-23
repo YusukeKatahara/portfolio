@@ -4,9 +4,9 @@ export const defaultLang: Lang = 'ja';
 
 export const ui = {
   ja: {
-    'site.title': '片原佑介 | bigdogdig.com',
+    'site.title': '片原悠介 | bigdogdig.com',
     'site.desc':
-      '片原佑介のポートフォリオ。生体医工学（taVNS）の博士課程で研究しながら、一人でアプリを企画・開発・リリースするエンジニア。',
+      '片原悠介のポートフォリオ。生体医工学（taVNS）の博士課程で研究しながら、一人でアプリを企画・開発・リリースするエンジニア。',
     'nav.home': 'ホーム',
     'nav.about': '私について',
     'nav.projects': 'プロジェクト',
