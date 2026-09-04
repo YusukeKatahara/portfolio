@@ -1,0 +1,13 @@
+---
+/**
+ * KEY VISUAL の余白。枠は描かず、指定の縦横比で領域だけ確保する。
+ * 後で画像・SVG・アニメーションを差し込む場所。
+ */
+interface Props {
+  ratio?: string; // 例 '16 / 9'
+  class?: string;
+}
+const { ratio = '16 / 9', class: cls } = Astro.props;
+---
+
+<div class:list={['kv', cls]} style={`aspect-ratio: ${ratio};`} aria-hidden="true"></div>

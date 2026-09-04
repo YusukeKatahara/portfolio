@@ -8,4 +8,7 @@ export const SOCIAL = {
   linkedin: 'https://www.linkedin.com/in/yusuke-katahara-8979b9400/',
 } as const;
 
+// メールアドレスは bot 収集対策として分割して埋め込み、ブラウザ側で結合して表示する。
+export const EMAIL_PARTS = { user: 'y.katahara.academia', domain: 'gmail.com' } as const;
+
 export const SITE_URL = 'https://bigdogdig.com';

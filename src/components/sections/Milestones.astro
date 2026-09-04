@@ -1,0 +1,27 @@
+---
+import Screen from '../Screen.astro';
+import type { Copy } from '../../data/types';
+
+interface Props { copy: Copy['milestones']; a11y: Copy['a11y'] }
+const { copy, a11y } = Astro.props;
+---
+
+<Screen id="milestones" group="moonshot" class="screen--milestones" labelledby="milestones-title">
+  <h2 class="sr-only" id="milestones-title">Milestones</h2>
+  <ol class="goal-list">
+    {copy.goals.map((g) => (
+      <li class="goal">
+        <h3 class="goal-title">{g.title}</h3>
+        <ul class="ms-list">
+          {g.milestones.map((m) => (
+            <li class:list={['ms', { 'is-done': m.done }]}>
+              <span class="ms-box" aria-hidden="true"></span>
+              <span class="sr-only">{m.done ? a11y.done : a11y.todo}: </span>
+              <span class="ms-label">{m.label}</span>
+            </li>
+          ))}
+        </ul>
+      </li>
+    ))}
+  </ol>
+</Screen>

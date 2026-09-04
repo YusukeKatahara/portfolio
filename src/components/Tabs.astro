@@ -1,0 +1,56 @@
+---
+/**
+ * タブ UI。JS（main.ts）が aria-selected と hidden を切り替える。
+ * 同じ name を持つタブ群はページ内で同期する（For Clients / For Recruiters など）。
+ *
+ * 使い方:
+ *   <Tabs name="audience" tabs={[{id:'clients',label:'For Clients'},...]} initial="clients" barPosition="top">
+ *     <div slot="clients">...</div>
+ *     <div slot="recruiters">...</div>
+ *   </Tabs>
+ */
+interface Props {
+  name: string;
+  tabs: { id: string; label: string }[];
+  initial?: string;
+  barPosition?: 'top' | 'bottom';
+  barClass?: string;
+}
+const { name, tabs, initial = tabs[0]?.id, barPosition = 'top', barClass } = Astro.props;
+const uid = `${name}-${Math.random().toString(36).slice(2, 7)}`;
+
+// スロット名が動的なので、テンプレート内の <slot name> ではなく render で取り出す
+const panels = await Promise.all(
+  tabs.map(async (t) => ({ ...t, html: Astro.slots.has(t.id) ? await Astro.slots.render(t.id) : '' }))
+);
+---
+
+<div class:list={['tabs', `tabs--${barPosition}`]} data-tabs={name}>
+  <div class:list={['tab-bar', barClass]} role="tablist">
+    {tabs.map((t) => (
+      <button
+        class="tab"
+        type="button"
+        role="tab"
+        id={`${uid}-tab-${t.id}`}
+        aria-controls={`${uid}-panel-${t.id}`}
+        aria-selected={t.id === initial ? 'true' : 'false'}
+        tabindex={t.id === initial ? 0 : -1}
+        data-tab={t.id}
+      >{t.label}</button>
+    ))}
+  </div>
+  <div class="tab-panels">
+    {panels.map((p) => (
+      <div
+        class="tab-panel"
+        role="tabpanel"
+        id={`${uid}-panel-${p.id}`}
+        aria-labelledby={`${uid}-tab-${p.id}`}
+        data-panel={p.id}
+        hidden={p.id !== initial}
+        set:html={p.html}
+      />
+    ))}
+  </div>
+</div>

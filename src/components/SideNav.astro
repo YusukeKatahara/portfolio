@@ -1,0 +1,47 @@
+---
+/**
+ * 左ナビゲーション（PC）兼 モバイルメニュー。
+ * - 現在のセクションに応じて JS が .is-active / aria-current を付け替える
+ * - アクティブなグループだけサブ項目を展開し、見出しを大きく表示する
+ * - HERO 表示中は非表示（body.nav-on で出現）
+ * - モバイルでは上部バー（.topbar）＋全画面メニューとして振る舞う
+ */
+import type { NavGroup } from '../data/types';
+
+interface Props {
+  groups: NavGroup[];
+  labels: { nav: string; menu: string; close: string };
+}
+const { groups, labels } = Astro.props;
+---
+
+<div class="topbar" aria-hidden="true">
+  <button class="topbar-btn" id="topbar-btn" type="button" aria-controls="sidenav" aria-expanded="false">
+    <span class="topbar-current">
+      <span class="topbar-group" data-current-group></span>
+      <span class="topbar-sub" data-current-sub></span>
+    </span>
+    <span class="topbar-icon" data-open={labels.menu} data-close={labels.close}>{labels.menu}</span>
+  </button>
+</div>
+
+<nav class="sidenav" id="sidenav" aria-label={labels.nav}>
+  <ol class="nav-list">
+    {groups.map((g) => (
+      <li class:list={['nav-group', { 'has-subs': !!g.subs }]} data-group={g.id}>
+        <a class="nav-main" href={`#${g.target}`} data-target={g.target}>{g.label}</a>
+        {g.subs && (
+          <div class="nav-subs">
+            <ol class="nav-subs-list">
+              {g.subs.map((s) => (
+                <li>
+                  <a class="nav-sub" href={`#${s.id}`} data-target={s.id}>{s.label}</a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

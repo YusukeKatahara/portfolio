@@ -1,0 +1,21 @@
+---
+import Screen from '../Screen.astro';
+import KeyVisual from '../KeyVisual.astro';
+import type { Copy } from '../../data/types';
+
+interface Props { copy: Copy['goals'] }
+const { copy } = Astro.props;
+---
+
+<Screen id="goals" group="moonshot" class="screen--goals" labelledby="goals-title">
+  <p class="kicker">{copy.kicker}</p>
+  <h2 class="h2" id="goals-title">{copy.headline}</h2>
+  <ul class="pillars">
+    {copy.pillars.map((p) => (
+      <li class="pillar">
+        <h3 class="h3">{p}</h3>
+        <KeyVisual ratio="3 / 5" class="kv--pillar" />
+      </li>
+    ))}
+  </ul>
+</Screen>

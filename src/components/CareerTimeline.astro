@@ -1,0 +1,71 @@
+---
+/**
+ * 経歴の年表。緩やかに登る薄い地面（くさび形）に旗を立て、右端で「現在」の崖が立ち上がる。
+ * PC: SVG で描画。モバイル: 縦のリストに切り替える（同じデータ）。
+ */
+import type { CareerPoint } from '../data/types';
+
+interface Props { points: CareerPoint[] }
+const { points } = Astro.props;
+
+// ---- SVG ジオメトリ（viewBox 1200×400）----
+const W = 1200;
+const H = 400;
+const groundL = 300;      // 左端の地面上辺 y
+const groundR = 250;      // 崖手前の地面上辺 y
+const thickL = 6;         // 地面の厚み（左）
+const thickR = 32;        // 地面の厚み（右）
+const cliffX = 1110;      // 崖の立ち上がり x
+const cliffTop = 70;
+const xs = [70, 400, 660, 860, 1010]; // 旗の x（点数が違う場合は等間隔に補間）
+const n = points.length;
+const flagX = (i: number) => (n === xs.length ? xs[i] : 60 + (i * (cliffX - 140)) / Math.max(1, n - 1));
+const groundY = (x: number) => groundL + ((groundR - groundL) * x) / cliffX;
+const thickAt = (x: number) => thickL + ((thickR - thickL) * x) / cliffX;
+const poleH = 96;
+const flagW = 46;
+const flagH = 40;
+
+const groundPath = [
+  `M0 ${groundL}`,
+  `L${cliffX} ${groundR}`,
+  // 崖: S字に立ち上がる
+  `C${cliffX + 24} ${groundR - 4} ${cliffX + 16} ${cliffTop + 120} ${cliffX + 32} ${cliffTop + 40}`,
+  `C${cliffX + 38} ${cliffTop + 18} ${cliffX + 50} ${cliffTop} ${cliffX + 70} ${cliffTop}`,
+  `L${W} ${cliffTop}`,
+  `L${W} ${groundR + thickR}`,
+  `L0 ${groundL + thickL}`,
+  'Z',
+].join(' ');
+---
+
+<figure class="timeline">
+  <svg class="timeline-svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="timeline-desc" focusable="false">
+    <desc id="timeline-desc">{points.map((p) => `${p.year}: ${p.label}`).join('. ')}</desc>
+    <path d={groundPath} fill="currentColor" />
+    {points.map((p, i) => {
+      const x = flagX(i);
+      const gy = groundY(x);
+      const top = gy - poleH;
+      const above = i % 2 === 1; // ラベルを上下交互に
+      const anchor = i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle';
+      const tx = i === 0 ? x - 8 : i === n - 1 ? x + 8 : x;
+      const y1 = above ? top - 44 : gy + thickAt(x) + 36;
+      const y2 = y1 + 28;
+      return (
+        <g class="flag">
+          <rect x={x - 4} y={top} width="8" height={poleH} fill="currentColor" />
+          <polygon points={`${x - 4},${top} ${x - 4 - flagW},${top + flagH / 2} ${x - 4},${top + flagH}`} fill="currentColor" />
+          <text class="timeline-svg-year" x={tx} y={y1} text-anchor={anchor}>{p.year}</text>
+          <text class="timeline-svg-label" x={tx} y={y2} text-anchor={anchor}>{p.label}</text>
+        </g>
+      );
+    })}
+  </svg>
+
+  <ol class="timeline-list">
+    {points.map((p) => (
+      <li><b class="timeline-year">{p.year}</b><span>{p.label}</span></li>
+    ))}
+  </ol>
+</figure>

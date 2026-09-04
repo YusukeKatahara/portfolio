@@ -1,0 +1,20 @@
+---
+import Screen from '../Screen.astro';
+import type { Copy } from '../../data/types';
+
+interface Props { copy: Copy['how'] }
+const { copy } = Astro.props;
+---
+
+<Screen id="how-i-work" group="about" class="screen--how" labelledby="how-title">
+  <h2 class="h2" id="how-title">{copy.title}</h2>
+  <div class="how-lead">
+    {copy.lead.map((l) => <p class="lead">{l}</p>)}
+  </div>
+  <div class="how-body">
+    {copy.body.map((l) => <p class="lead">{l}</p>)}
+  </div>
+  <div class="how-close">
+    {copy.close.map((l, i) => <p class:list={['body', { 'lead-soft': i === 3 }]}>{l}</p>)}
+  </div>
+</Screen>

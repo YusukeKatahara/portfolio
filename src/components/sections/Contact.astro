@@ -1,0 +1,74 @@
+---
+import Screen from '../Screen.astro';
+import Tabs from '../Tabs.astro';
+import type { Copy } from '../../data/types';
+import { WEB3FORMS_ACCESS_KEY, EMAIL_PARTS } from '../../site.config';
+
+interface Props { copy: Copy['contact'] }
+const { copy } = Astro.props;
+const tabs = [
+  { id: 'clients', label: copy.tabs.clients },
+  { id: 'recruiters', label: copy.tabs.recruiters },
+];
+---
+
+<Screen id="contact" group="contact" class="screen--contact" labelledby="contact-title">
+  <h2 class="h2" id="contact-title">{copy.title}</h2>
+
+  <Tabs name="audience" tabs={tabs} initial="clients" barClass="tab-bar--audience">
+    <div slot="clients">
+      <form
+        id="contact-form"
+        class="contact-form"
+        data-key={WEB3FORMS_ACCESS_KEY}
+        data-sending={copy.form.sending}
+        data-done={copy.form.done}
+        data-error={copy.form.error}
+      >
+        <label class="field field--short">
+          <span class="field-label">{copy.form.name}</span>
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label class="field field--short">
+          <span class="field-label">{copy.form.contact}</span>
+          <input type="text" name="contact" required placeholder={copy.form.contactHint} autocomplete="email" />
+        </label>
+        <label class="field field--short">
+          <span class="field-label">{copy.form.source}</span>
+          <input type="text" name="source" />
+        </label>
+        <label class="field">
+          <span class="field-label">{copy.form.dream}</span>
+          <textarea name="dream" rows="5" required></textarea>
+        </label>
+        {/* honeypot: 人間には見えない。bot が埋めると弾かれる */}
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="form-actions">
+          <button class="btn btn--submit" type="submit">
+            <span class="btn-arrow" aria-hidden="true">▶</span>
+            <span class="btn-label">{copy.form.submit}</span>
+          </button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+
+    <div slot="recruiters" class="letter">
+      {copy.letter.opening.map((l) => <p class="body">{l}</p>)}
+      <dl class="letter-facts">
+        {copy.letter.facts.map((f) => (
+          <div class="letter-fact">
+            <dt class="body">{f.label}</dt>
+            {f.values.map((v) => <dd class="body">{v}</dd>)}
+          </div>
+        ))}
+      </dl>
+      {copy.letter.closing.map((l) => <p class="body">{l}</p>)}
+      <p class="body letter-signature">{copy.letter.signature}</p>
+      <p class="body letter-email">
+        {copy.letter.emailLabel}
+        <span data-email data-u={EMAIL_PARTS.user} data-d={EMAIL_PARTS.domain}>{EMAIL_PARTS.user} [at] {EMAIL_PARTS.domain.replace('.', ' [dot] ')}</span>
+      </p>
+    </div>
+  </Tabs>
+</Screen>

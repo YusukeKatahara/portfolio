@@ -1,0 +1,48 @@
+---
+import Screen from '../Screen.astro';
+import KeyVisual from '../KeyVisual.astro';
+import type { Project } from '../../data/types';
+
+interface Props { project: Project }
+const { project } = Astro.props;
+
+/** 本文中の {key} をリンクに置換して、文字列とリンクの配列に分解する */
+function splitLinks(text: string) {
+  const parts: ({ t: 'text'; v: string } | { t: 'link'; label: string; url: string })[] = [];
+  const re = /\{(\w+)\}/g;
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (m.index > last) parts.push({ t: 'text', v: text.slice(last, m.index) });
+    const link = project.links?.find((l) => l.key === m![1]);
+    if (link) parts.push({ t: 'link', label: link.label, url: link.url });
+    else parts.push({ t: 'text', v: m[0] });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push({ t: 'text', v: text.slice(last) });
+  return parts;
+}
+---
+
+<Screen id={project.id} group="projects" class="screen--project" labelledby={`${project.id}-title`}>
+  <h2 class="project-title" id={`${project.id}-title`}>
+    <span class="project-name">{project.name}</span>
+    <span class="project-tagline">– {project.tagline}</span>
+  </h2>
+
+  <h3 class="h3">Overview</h3>
+  {project.overview.map((p) => (
+    <p class="body">
+      {splitLinks(p).map((part) =>
+        part.t === 'text' ? part.v : <a href={part.url} target="_blank" rel="noopener">{part.label}</a>
+      )}
+    </p>
+  ))}
+
+  <h3 class="h3">MY ROLE</h3>
+  {project.role.map((p) => <p class="body">{p}</p>)}
+
+  <KeyVisual ratio={project.kvRatio} class="kv--project" />
+
+  {project.footnote && <p class="project-footnote body">{project.footnote}</p>}
+</Screen>

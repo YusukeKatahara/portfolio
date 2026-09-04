@@ -3,12 +3,9 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="404">
-  <div class="empty-state">
-    <p class="page-title" style="font-size:3rem">404</p>
-    <p class="big">この穴には何も埋まっていませんでした。</p>
-    <p class="note">Nothing was buried in this hole.</p>
-    <p style="margin-top:2rem">
-      <a class="btn" href="/" data-dig>ホームへ戻る / Back to home</a>
-    </p>
-  </div>
+  <main id="main" class="notfound">
+    <p class="notfound-code">404</p>
+    <p class="lead">Nothing was buried in this hole.</p>
+    <p class="body"><a href="/">Back to the top<span aria-hidden="true"> ↑</span></a></p>
+  </main>
 </Base>

@@ -1,0 +1,25 @@
+---
+import KeyVisual from '../KeyVisual.astro';
+import type { Copy } from '../../data/types';
+import { SOCIAL } from '../../site.config';
+
+interface Props { copy: Copy['hero'] }
+const { copy } = Astro.props;
+---
+
+<section class="screen screen--hero" id="hero" data-section data-group="hero" aria-label="Intro">
+  <div class="screen-inner hero">
+    <div class="hero-text">
+      <h1 class="hero-lines">
+        {copy.lines.map((l) => <span class="hero-line">{l}</span>)}
+      </h1>
+      <p class="hero-tagline">{copy.tagline}</p>
+      <ul class="hero-social" aria-label="Social links">
+        {copy.social.map((s) => (
+          <li><a href={SOCIAL[s.key]} target="_blank" rel="noopener">{s.label}<span aria-hidden="true"> ↗</span></a></li>
+        ))}
+      </ul>
+    </div>
+    <KeyVisual ratio="4 / 3" class="kv--hero" />
+  </div>
+</section>

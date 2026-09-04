@@ -1,0 +1,44 @@
+---
+import Screen from '../Screen.astro';
+import Tabs from '../Tabs.astro';
+import type { Copy } from '../../data/types';
+
+interface Props { copy: Copy['what'] }
+const { copy } = Astro.props;
+const tabs = [
+  { id: 'clients', label: copy.tabs.clients },
+  { id: 'recruiters', label: copy.tabs.recruiters },
+];
+---
+
+<Screen id="what-i-do" group="about" class="screen--what" labelledby="what-title">
+  <h2 class="h2" id="what-title">{copy.title}</h2>
+  <p class="lead">{copy.lead}</p>
+
+  <Tabs name="audience" tabs={tabs} initial="clients" barClass="tab-bar--audience">
+    <div slot="clients" class="what-clients">
+      <p class="lead">{copy.clients.headline}</p>
+      <p class="body">{copy.clients.body}</p>
+      <p class="lead-soft what-give">{copy.clients.giveLabel}</p>
+      <ul class="plain-list body">
+        {copy.clients.gives.map((g) => <li>{g}</li>)}
+      </ul>
+    </div>
+
+    <div slot="recruiters" class="what-recruiters">
+      <ol class="steps">
+        {copy.recruiters.steps.map((s) => (
+          <li>
+            <h3 class="h3">{s.title}</h3>
+            <p class="body">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Tabs>
+
+  <p class="case-study">
+    <span class="case-prefix">{copy.caseStudy.prefix}</span>
+    <a href={`#${copy.caseStudy.target}`}>{copy.caseStudy.label}<span aria-hidden="true"> ↓</span></a>
+  </p>
+</Screen>

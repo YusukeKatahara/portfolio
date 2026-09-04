@@ -1,0 +1,56 @@
+---
+import Screen from '../Screen.astro';
+import Tabs from '../Tabs.astro';
+import CareerTimeline from '../CareerTimeline.astro';
+import type { Copy } from '../../data/types';
+
+interface Props { copy: Copy['who'] }
+const { copy } = Astro.props;
+const tabs = [
+  { id: 'career', label: copy.tabs.career },
+  { id: 'style', label: copy.tabs.style },
+  { id: 'hobbies', label: copy.tabs.hobbies },
+];
+---
+
+<Screen id="who-i-am" group="about" class="screen--who" labelledby="who-title">
+  <h2 class="who-name" id="who-title">{copy.name}</h2>
+
+  <ul class="triad" aria-label="Roles">
+    {copy.triad.map((t) => (
+      <li>
+        <span class="triad-verb">{t.verb}</span>
+        <span class="triad-noun">{t.noun}</span>
+      </li>
+    ))}
+  </ul>
+
+  <Tabs name="who" tabs={tabs} initial="career" barPosition="bottom" barClass="tab-bar--big tab-bar--spread">
+    <div slot="career">
+      <CareerTimeline points={copy.career} />
+    </div>
+
+    <div slot="style" class="style-panel">
+      <p class="style-lead">{copy.style.lead}</p>
+      <ul class="style-list">
+        {copy.style.points.map((p) => (
+          <li>
+            <b class="style-title">{p.title}</b>
+            <span class="style-body">{p.body}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div slot="hobbies" class="hobbies-panel">
+      <ul class="hobby-list">
+        {copy.hobbies.map((h) => (
+          <li>
+            <b class="hobby-label">{h.label}</b>
+            {h.note && <span class="hobby-note">{h.note}</span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Tabs>
+</Screen>

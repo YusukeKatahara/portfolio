@@ -1,0 +1,19 @@
+---
+/**
+ * 1画面（1セクション）の共通ラッパー。
+ * id はナビのジャンプ先、group はナビのグループ判定に使う。
+ */
+interface Props {
+  id: string;
+  group: string;
+  class?: string;
+  labelledby?: string;
+}
+const { id, group, class: cls, labelledby } = Astro.props;
+---
+
+<section class:list={['screen', cls]} id={id} data-section data-group={group} aria-labelledby={labelledby}>
+  <div class="screen-inner">
+    <slot />
+  </div>
+</section>

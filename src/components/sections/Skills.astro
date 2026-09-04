@@ -1,0 +1,32 @@
+---
+import Screen from '../Screen.astro';
+import KeyVisual from '../KeyVisual.astro';
+import type { Copy } from '../../data/types';
+
+interface Props { copy: Copy['skills'] }
+const { copy } = Astro.props;
+---
+
+<Screen id="skills" group="skills" class="screen--skills" labelledby="skills-title">
+  <h2 class="sr-only" id="skills-title">Skills</h2>
+  <div class="skills-grid">
+    <div class="skills-col">
+      <h3 class="h2">{copy.knowledgeTitle}</h3>
+      <ul class="dash-list body">
+        {copy.knowledge.map((k) => <li>{k}</li>)}
+      </ul>
+      <KeyVisual ratio="4 / 3" class="kv--skills" />
+    </div>
+    <div class="skills-col">
+      <h3 class="h2">{copy.toolsTitle}</h3>
+      {copy.tools.map((g) => (
+        <div class="tool-group">
+          <p class="lead-soft">{g.title}</p>
+          <ul class="dash-list body">
+            {g.items.map((i) => <li>{i}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</Screen>

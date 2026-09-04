@@ -1,8 +1,30 @@
 ---
 import Base from '../layouts/Base.astro';
-import HomeBody from '../components/bodies/HomeBody.astro';
+import SideNav from '../components/SideNav.astro';
+import Hero from '../components/sections/Hero.astro';
+import WhoIAm from '../components/sections/WhoIAm.astro';
+import HowIWork from '../components/sections/HowIWork.astro';
+import WhatIDo from '../components/sections/WhatIDo.astro';
+import Skills from '../components/sections/Skills.astro';
+import Project from '../components/sections/Project.astro';
+import Goals from '../components/sections/Goals.astro';
+import Milestones from '../components/sections/Milestones.astro';
+import Contact from '../components/sections/Contact.astro';
+import { en as copy } from '../data/copy.en';
 ---
 
 <Base>
-  <HomeBody lang="ja" />
+  <SideNav groups={copy.nav} labels={copy.a11y} />
+  <main id="main" class="page">
+    <Hero copy={copy.hero} />
+    <WhoIAm copy={copy.who} />
+    <HowIWork copy={copy.how} />
+    <WhatIDo copy={copy.what} />
+    <Skills copy={copy.skills} />
+    {copy.projects.map((p) => <Project project={p} />)}
+    <Goals copy={copy.goals} />
+    <Milestones copy={copy.milestones} a11y={copy.a11y} />
+    <Contact copy={copy.contact} />
+    <footer class="foot">{copy.footer.copyright}</footer>
+  </main>
 </Base>
