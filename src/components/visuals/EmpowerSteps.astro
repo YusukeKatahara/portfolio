@@ -1,0 +1,26 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure kind="empower" class={cls} viewBox="0 0 1280 440"
+  title="At first you stand on a platform I built; afterwards the platform is gone and you run on your own ground.">
+  <g class="v-before">
+    <rect x="110" y="300" width="340" height="54" />
+    <circle cx="280" cy="172" r="42" />
+    <path d="M212 300 C212 240 240 214 280 214 C320 214 348 240 348 300 Z" />
+    <text x="280" y="416" font-size="48" text-anchor="middle">AT FIRST, WITH ME</text>
+  </g>
+
+  <g class="v-arrow"><rect x="540" y="250" width="90" height="34" /><polygon points="628,230 692,267 628,304" /></g>
+
+  <g class="v-after">
+    <rect x="760" y="344" width="400" height="10" />
+    <circle cx="940" cy="150" r="50" />
+    <path d="M858 344 C858 272 892 240 940 240 C988 240 1022 272 1022 344 Z" />
+    <text x="960" y="416" font-size="48" text-anchor="middle">THEN, ON YOUR OWN</text>
+  </g>
+
+  <g class="ac v-grow"><rect x="1084" y="252" width="26" height="92" /><polygon points="1097,178 1052,254 1142,254" /></g>
+</Figure>

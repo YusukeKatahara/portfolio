@@ -1,0 +1,50 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure
+  kind="panel"
+  class={cls}
+  viewBox="0 0 640 536"
+  title="The recording software I built: four live waveforms, the stimulation phase running from pre to stim to post, and a timer that keeps every channel on the same clock."
+>
+  <rect x="24" y="36" width="592" height="412" rx="10" />
+
+  <circle class="bg" cx="60" cy="68" r="10" />
+  <text class="bg" x="80" y="78" font-size="26">REC</text>
+  <rect class="bg" x="452" y="46" width="140" height="44" rx="6" />
+  <text x="522" y="80" font-size="32" text-anchor="middle">00:00</text>
+
+  <text class="bg" x="48" y="116" font-size="24">ECG</text>
+  <rect class="bg" x="48" y="124" width="252" height="96" />
+  <polyline class="v-trace" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"
+    points="56,182 92,182 100,173 108,182 128,182 136,196 144,132 152,206 160,182 190,182 198,173 206,182 226,182 234,196 242,132 250,206 258,182 292,182" />
+
+  <text class="bg" x="318" y="116" font-size="24">RESPIRATION</text>
+  <rect class="bg" x="318" y="124" width="252" height="96" />
+  <path class="v-trace" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+    d="M326 172C342 130 368 130 384 172C400 214 426 214 442 172C458 130 484 130 500 172C516 214 542 214 558 172" />
+
+  <text class="bg" x="48" y="262" font-size="24">PULSE WAVE</text>
+  <rect class="bg" x="48" y="270" width="252" height="96" />
+  <polyline class="v-trace" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"
+    points="56,350 68,349 80,294 92,288 102,302 110,314 118,307 126,313 138,332 150,344 162,350 176,349 188,294 200,288 210,302 218,314 226,307 234,313 246,332 258,344 270,350 292,350" />
+
+  <text class="bg" x="318" y="262" font-size="24">PPG</text>
+  <rect class="bg" x="318" y="270" width="252" height="96" />
+  <polyline class="v-trace" fill="none" stroke="currentColor" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"
+    points="326,350 338,349 350,294 362,288 372,302 380,314 388,307 396,313 408,332 420,344 432,350 446,349 458,294 470,288 480,302 488,314 496,307 504,313 516,332 528,344 540,350 562,350" />
+
+  <rect class="bg" x="48" y="384" width="172" height="36" />
+  <text x="134" y="412" font-size="26" text-anchor="middle">PRE</text>
+  <g class="v-stim">
+    <rect class="ac" x="224" y="384" width="172" height="36" />
+    <text x="310" y="412" font-size="26" text-anchor="middle">STIM</text>
+  </g>
+  <rect class="bg" x="400" y="384" width="172" height="36" />
+  <text x="486" y="412" font-size="26" text-anchor="middle">POST</text>
+
+  <text x="320" y="510" font-size="34" text-anchor="middle">BUILT IN LABVIEW</text>
+</Figure>

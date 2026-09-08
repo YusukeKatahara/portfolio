@@ -1,0 +1,22 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure kind="buddy" class={cls} viewBox="0 0 1280 540"
+  title="Two people standing side by side, both looking at the same big dream.">
+  <circle class="ac v-dream" cx="980" cy="150" r="128" />
+  <text class="bg v-dream-label" x="980" y="138" font-size="52" text-anchor="middle">ONE</text>
+  <text class="bg v-dream-label" x="980" y="200" font-size="52" text-anchor="middle">DREAM</text>
+
+  <path class="v-gaze" d="M348 228 L852 172" fill="none" stroke="currentColor" stroke-width="8"
+    stroke-dasharray="22 16" stroke-linecap="round" />
+
+  <g class="v-people">
+    <g><circle cx="250" cy="282" r="54" /><path d="M170 442 C170 372 202 340 250 340 C298 340 330 372 330 442 Z" /></g>
+    <g><circle cx="430" cy="282" r="54" /><path d="M350 442 C350 372 382 340 430 340 C478 340 510 372 510 442 Z" /></g>
+  </g>
+
+  <text x="340" y="506" font-size="42" text-anchor="middle">YOU AND ME</text>
+</Figure>

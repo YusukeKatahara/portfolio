@@ -1,0 +1,14 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure kind="continuity" class={cls} viewBox="0 0 480 800"
+  title="A closed loop with an arrow rising inside it: the same cycle, repeated, carries you upward.">
+  <rect class="v-ring" x="112" y="190" width="256" height="500" rx="128" fill="none" stroke="currentColor" stroke-width="46" />
+  <g class="v-rise">
+    <rect x="218" y="404" width="44" height="236" />
+    <polygon class="ac" points="240,302 178,404 302,404" />
+  </g>
+</Figure>

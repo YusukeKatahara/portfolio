@@ -39,6 +39,7 @@
 * { margin: 0; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
 input, button, textarea, select { font: inherit; color: inherit; }
 ul, ol { padding: 0; list-style: none; }
 b, strong, h1, h2, h3, h4 { font-weight: 400; } /* Impact に太字は無い。擬似ボールドを避ける */
@@ -120,8 +121,7 @@ a:hover { text-decoration-thickness: 4px; }
   .screen:not(.screen--hero) { padding-top: calc(var(--topbar-h) + 1.5rem); }
 }
 
-/* KEY VISUAL の余白（枠は描かない） */
-.kv { width: 100%; }
+/* 説明図の共通スタイルはファイル末尾の「visuals」に置く */
 
 /* ============================================================
    side navigation（PC）
@@ -254,26 +254,119 @@ body.nav-on .topbar { transform: none; }
 .tab[aria-selected='true'], .tab:hover { color: var(--ink); }
 .tab-bar--big .tab { font-size: var(--fs-h2); line-height: 1.1; }
 .tab-bar--spread { justify-content: space-around; }
-.tab-bar--audience { gap: 0.5rem clamp(2rem, 14vw, 16rem); }
+
+/* For Clients / For Recruiters は「読む立場を選ぶスイッチ」。
+   本文と同じ字面のまま並べると見出しに紛れて見落とされるので、
+   枠で囲んでひと目でスイッチと分かる形にする */
+.tab-bar--audience {
+  align-self: flex-start;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 0;
+  border: 3px solid var(--line);
+}
+.tabs--top .tab-bar--audience { margin: clamp(1.4rem, 3.5vh, 2.6rem) 0 clamp(1.5rem, 3.5vh, 2.6rem); }
+.tab-bar--audience .tab {
+  display: inline-flex; align-items: center; gap: 0.55em;
+  padding: 0.36em 1.15em;
+  font-size: clamp(1.02rem, 2vw, 2.1rem);
+  line-height: 1.25;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.tab-bar--audience .tab + .tab { border-left: 3px solid var(--line); }
+/* 選択中の印はナビと同じ言語（紫のドット）。反転と合わせて遠目にも切替が読める */
+.tab-bar--audience .tab::before {
+  content: ''; flex: none;
+  width: 0.46em; height: 0.46em; border-radius: 50%;
+  background: transparent;
+  transition: background-color 0.2s ease;
+}
+.tab-bar--audience .tab[aria-selected='true'] { background: var(--ink); color: var(--bg); }
+.tab-bar--audience .tab[aria-selected='true']::before { background: var(--accent); }
+.tab-bar--audience .tab:not([aria-selected='true']):hover { background: #ededed; color: var(--ink); }
+
+/* 押した結果、下の内容が入れ替わったことを一瞬の動きで伝える */
+@media (prefers-reduced-motion: no-preference) {
+  .tab-panel:not([hidden]) { animation: tab-in 0.24s ease-out both; }
+}
+@keyframes tab-in { from { opacity: 0; transform: translateY(0.5rem); } }
 
 /* ============================================================
-   HERO
+   HERO — 3行のコピーそのものが絵。DIG DEEPER が「土」に沈む
    ============================================================ */
+/* isolation でブレンドをこのセクションに閉じ込める。
+   その際 backdrop が透明だと difference が効かないので、背景色を明示する */
+.screen--hero { overflow: hidden; isolation: isolate; background: var(--bg); }
 .hero {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: center;
+  --gap-under: clamp(1.4rem, 4vh, 2.6rem);
+  /* 3行の塊とその下の情報に共通の幅。文字サイズはこの幅から決まるので、
+     ここを変えると HERO 全体の大きさが変わる */
+  --hero-w: min(100%, 80rem, 86vh);
+  justify-content: center;
 }
-.hero-lines { display: flex; flex-direction: column; gap: 0.32em; font-size: var(--fs-hero); line-height: 1; }
-.hero-tagline { font-size: var(--fs-lead-soft); line-height: 1.35; margin-top: 1.4em; }
-.hero-social { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; margin-top: 2.2rem; font-size: var(--fs-small); letter-spacing: 0.08em; }
+
+.hero-lines {
+  position: relative;
+  display: flex; flex-direction: column;
+  width: var(--hero-w);
+  container-type: inline-size;
+  line-height: 1;
+}
+/* 両端は行ごとの文字サイズで揃える（字間は詰めたまま＝黒い塊の密度を保つ）。
+   --w は Impact での行の幅（em）。コピーを変えたら測り直す（測り方は README） */
+.hero-line {
+  display: block;
+  font-size: var(--fs-hero); /* container query 単位が無い環境向け */
+  font-size: calc(100cqw / var(--w));
+  animation: heroLine 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.hero-line--1 { --w: 4.41; }
+.hero-line--2 { --w: 5.18; animation-delay: 0.12s; }
+.hero-line--3 { --w: 4.49; animation-delay: 0.24s; }
+@keyframes heroLine {
+  from { opacity: 0; transform: translateY(0.45em); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 1文字ずつ flex に並べる。--w に少し余裕があるぶんだけ均等に配られるので、
+   フォントが Anton に落ちても右端が揃う */
+.hero-line-inner { display: flex; justify-content: space-between; letter-spacing: 0; }
+.hero-sp { flex: 0 0 0.177em; } /* Impact のスペースと同じ送り幅 */
+/* BIG / DOG / DIG＝bigdogdig。文字が出そろってから紫に染まる */
+.hero-key { color: var(--accent); animation: heroKey 0.5s 1.15s ease-out both; }
+@keyframes heroKey { from { color: var(--ink); } to { color: var(--accent); } }
+
+/* 白い帯 × difference: 白地は黒へ、黒い文字は白へ反転する（＝掘った土の中） */
+.hero-ground { display: none; }
+@supports (mix-blend-mode: difference) {
+  .hero-ground {
+    display: block;
+    position: absolute;
+    left: -120vw; right: -120vw;
+    /* 3行の下端とタグラインの中間。文字には掛からない */
+    top: calc(100% + var(--gap-under) * 0.5);
+    height: 130vh;
+    background: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    transform-origin: bottom;
+    animation: heroGround 1.2s 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .hero-under { color: var(--bg); }
+}
+@keyframes heroGround { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.hero-under { position: relative; z-index: 1; width: var(--hero-w); margin-top: var(--gap-under); }
+/* タグラインの右にソーシャルリンクを置き、下端で揃える */
+.hero-meta { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.8rem 2.5rem; }
+.hero-tagline { font-size: var(--fs-lead-soft); line-height: 1.35; max-width: 30ch; }
+.hero-social { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; font-size: var(--fs-small); letter-spacing: 0.08em; }
 .hero-social a { text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 0.1em; }
 .hero-social a:hover { color: var(--accent); }
-@media (max-width: 767px) {
-  .hero { grid-template-columns: 1fr; }
-  .kv--hero { max-height: 32vh; }
-}
+.hero-scroll { margin-top: var(--gap-under); font-size: var(--fs-small); letter-spacing: 0.22em; }
+.hero-scroll span { display: inline-block; animation: heroScroll 1.9s ease-in-out infinite; }
+@keyframes heroScroll { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(0.4em); } }
 
 /* ============================================================
    ABOUT ME — Who I am
@@ -322,7 +415,20 @@ body.nav-on .topbar { transform: none; }
 .how-body { margin-top: 1.4rem; }
 .how-close { margin-top: 1.6rem; }
 .how-close .lead-soft { margin-top: 0.4em; }
+/* セクション下部に敷く横長の図 */
+.vis--band {
+  align-self: center;
+  width: min(100%, 50rem);
+  margin-top: auto;
+  padding-top: clamp(1.2rem, 4vh, 2.6rem);
+}
 
+.what-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
 .screen--what .lead { margin-top: 0.3em; }
 .what-clients .body { margin-top: 0.6em; }
 .what-give { margin-top: 1em; }
@@ -330,6 +436,10 @@ body.nav-on .topbar { transform: none; }
 .steps .body { margin-top: 0.3em; }
 .case-study { margin-top: auto; padding-top: 2.5rem; text-align: center; font-size: var(--fs-body); }
 .case-prefix { color: var(--muted); margin-right: 0.6em; }
+@media (max-width: 1250px) {
+  .what-head { grid-template-columns: 1fr; gap: 1rem; }
+  .vis--head { width: min(100%, 44rem); align-self: center; }
+}
 
 /* ============================================================
    SKILLS
@@ -337,7 +447,12 @@ body.nav-on .topbar { transform: none; }
 .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem clamp(2rem, 6vw, 7rem); }
 .skills-col .h2 { margin-bottom: 0.4em; }
 .tool-group { margin-bottom: 1.6rem; }
-.kv--skills { max-width: 32rem; margin-top: 1.5rem; }
+.screen--skills .vis--wide {
+  align-self: center;
+  width: min(100%, 46rem);
+  margin-top: auto;
+  padding-top: clamp(1.5rem, 5vh, 3.5rem);
+}
 @media (max-width: 767px) { .skills-grid { grid-template-columns: 1fr; } }
 
 /* ============================================================
@@ -346,9 +461,39 @@ body.nav-on .topbar { transform: none; }
 .project-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2em 0.6em; line-height: 1.1; }
 .project-name { font-size: var(--fs-h2); }
 .project-tagline { font-size: var(--fs-h3); }
-.screen--project .h3 { margin-top: clamp(1rem, 3vh, 2rem); margin-bottom: 0.25em; }
-.kv--project { max-width: 46rem; margin-top: 1.5rem; }
-.project-footnote { margin-top: auto; padding-top: 1.5rem; text-align: right; }
+.screen--project .h3 { margin-bottom: 0.25em; }
+.project-body { flex: 1; display: flex; flex-direction: column; }
+.project-text {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+  margin-top: 0.6em;
+}
+/* 実物の図を横に並べる帯。列幅は plates[].weight の比、subgrid で図・見出し・説明の行を揃える */
+.project-plates {
+  display: grid;
+  grid-template-columns: var(--cols, repeat(3, minmax(0, 1fr)));
+  grid-template-rows: auto auto auto;
+  column-gap: clamp(1.2rem, 3vw, 2.6rem);
+  row-gap: 0.3rem;
+  align-self: center;
+  width: 100%;
+  max-width: 84rem;
+  margin-top: auto;
+  padding-top: clamp(1.2rem, 4vh, 2.6rem);
+}
+.plate { display: grid; grid-template-rows: subgrid; grid-row: span 3; }
+.plate > .vis { align-self: center; }
+.plate-title { font-size: var(--fs-lead-soft); line-height: 1.2; margin-top: 0.3em; }
+.plate-caption { font-size: var(--fs-small); line-height: 1.5; }
+.project-footnote { margin-top: 1.2rem; text-align: right; }
+/* 図の中の文字が小さくなりすぎる幅からは、縦積みにして図を大きく見せる */
+@media (max-width: 900px) {
+  .project-text { grid-template-columns: 1fr; }
+  .project-plates { grid-template-columns: 1fr; max-width: 34rem; row-gap: 0.3rem; }
+  .plate { margin-bottom: 1.6rem; }
+}
 
 /* ============================================================
    MOONSHOT
@@ -361,13 +506,32 @@ body.nav-on .topbar { transform: none; }
   margin-top: clamp(1.5rem, 6vh, 4rem);
   max-width: 64rem;
 }
+.pillar { display: flex; flex-direction: column; }
 .pillar .h3 { margin-bottom: 0.5em; }
+.vis--pillar { width: min(100%, 14rem); }
 @media (max-width: 640px) {
-  .pillars { grid-template-columns: 1fr; }
-  .kv--pillar { max-height: 24vh; }
+  .pillars { grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: none; }
+  .pillar .h3 { font-size: var(--fs-body); }
+  .vis--pillar { width: 100%; }
 }
 
-.goal-list { display: grid; gap: clamp(0.9rem, 2.5vh, 1.6rem); }
+/* 7 つのゴールを貫く一本の道。歩き始めたゴールの点は紫 */
+.goal-list { position: relative; display: grid; gap: clamp(0.9rem, 2.5vh, 1.6rem); padding-left: 2.4rem; }
+.goal-list::before {
+  content: '';
+  position: absolute; left: 8px; top: 0.9em; bottom: 0.9em;
+  width: 4px; background: var(--ink);
+}
+.goal { position: relative; }
+.goal::before {
+  content: '';
+  position: absolute; left: -2.4rem; top: 0.34em;
+  width: 12px; height: 12px;
+  background: var(--bg);
+  border: 4px solid var(--ink);
+  border-radius: 50%;
+}
+.goal.is-started::before { background: var(--accent); border-color: var(--accent); }
 .goal-title { font-size: var(--fs-h3); line-height: 1.15; }
 .ms-list { display: flex; flex-wrap: wrap; gap: 0.2rem 2rem; margin-top: 0.2em; }
 .ms { display: inline-flex; align-items: center; gap: 0.5em; font-size: var(--fs-body); line-height: 1.6; }
@@ -445,9 +609,134 @@ body.nav-on .topbar { transform: none; }
 .notfound-code { font-size: var(--fs-hero); line-height: 1; }
 
 /* ============================================================
+   visuals — 説明図
+   黒ベタの面で形を作り、内部の構造は背景色で抜く。紫は各図に一点だけ。
+   色は SVG 側では指定せず、ここで決める:
+     currentColor = --ink / .ac,.acs = --accent / .bg,.bgs = --bg
+   ============================================================ */
+.vis { width: 100%; margin: 0; }
+.vis svg { display: block; width: 100%; height: auto; color: var(--ink); fill: currentColor; }
+.vis text { font-family: inherit; fill: currentColor; letter-spacing: 0.03em; }
+.vis .ac { fill: var(--accent); }
+.vis .acs { stroke: var(--accent); }
+.vis .bg { fill: var(--bg); }
+.vis .bgs { stroke: var(--bg); }
+
+/* 画面に入ったら現れる。JS が is-in を付けるので、JS 無効なら最初から見えている */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+@keyframes vDraw { to { stroke-dashoffset: 0; } }
+@keyframes vFade { to { opacity: 1; } }
+@keyframes vPop { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes vGrowY { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* SKILLS: 波形が走り、モデルに入り、最後に制御が体へ戻る */
+.js .vis--skills .v-wave { stroke-dasharray: 560; stroke-dashoffset: 560; }
+.js .vis--skills .v-loop { stroke-dasharray: 760; stroke-dashoffset: 760; }
+.js .vis--skills .v-late { opacity: 0; }
+.js .vis--skills.is-in .v-wave { animation: vDraw 1.1s 0.3s ease-out forwards; }
+.js .vis--skills.is-in .v-loop { animation: vDraw 1s 0.85s ease-out forwards; }
+.js .vis--skills.is-in .v-late { animation: vFade 0.5s 1.75s ease-out forwards; }
+
+/* WHY THE EAR: 侵襲的な VNS と taVNS を実物の図で並べる（説明図ではないので描き直さない） */
+.vis--why { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.6rem, 2vw, 1.4rem); align-items: start; }
+.why-shot { text-align: center; }
+.why-label { font-size: var(--fs-lead-soft); line-height: 1.15; margin-top: 0.35em; }
+.why-label--ac { color: var(--accent); }
+.why-note { font-size: var(--fs-small); line-height: 1.3; }
+
+/* THE RIG: 研究で使っている図をそのまま取り込む。
+   ラベルだけはページのフォントで置き直す（原図の 12px はこの表示幅では読めない） */
+.vis--rig text { font-family: var(--font); font-size: 20px; letter-spacing: 0.01em; }
+
+/* THE INSTRUMENT: 4 つの波形が一斉に走り出し、そのあと STIM が点く */
+.js .vis--panel .v-trace { stroke-dasharray: 400; stroke-dashoffset: 400; }
+.js .vis--panel .v-stim { opacity: 0; }
+.js .vis--panel.is-in .v-trace { animation: vDraw 1.3s 0.4s ease-out forwards; }
+.js .vis--panel.is-in .v-stim { animation: vFade 0.5s 1.5s ease-out forwards; }
+
+/* V EFFECT（実物）: この図だけ SVG ではなくアイコン画像そのもの。
+   隣の図と縦横比を揃えたいので 16:9 の枠の中央に正方形で置く */
+.vis--app { display: grid; place-items: center; aspect-ratio: 16 / 9; }
+.app-icon { width: auto; height: 100%; max-width: 100%; border-radius: 22%; }
+
+/* V EFFECT: 棒が下から立ち上がり、勝ちの点が順に灯る */
+.vis--veffect .v-bars rect { transform-box: fill-box; transform-origin: bottom; }
+.vis--veffect .v-nodes circle, .vis--veffect .v-peak { transform-box: fill-box; transform-origin: center; }
+.js .vis--veffect .v-trend { stroke-dasharray: 960; stroke-dashoffset: 960; }
+.js .vis--veffect.is-in .v-bars rect { animation: vGrowY 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.js .vis--veffect.is-in .v-bars rect:nth-child(2) { animation-delay: 0.09s; }
+.js .vis--veffect.is-in .v-bars rect:nth-child(3) { animation-delay: 0.18s; }
+.js .vis--veffect.is-in .v-bars rect:nth-child(4) { animation-delay: 0.27s; }
+.js .vis--veffect.is-in .v-bars rect:nth-child(5) { animation-delay: 0.36s; }
+.js .vis--veffect.is-in .v-trend { animation: vDraw 1.2s 0.5s ease-out forwards; }
+.js .vis--veffect.is-in .v-nodes circle { animation: vPop 0.4s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+.js .vis--veffect.is-in .v-nodes circle:nth-child(1) { animation-delay: 0.6s; }
+.js .vis--veffect.is-in .v-nodes circle:nth-child(2) { animation-delay: 0.78s; }
+.js .vis--veffect.is-in .v-nodes circle:nth-child(3) { animation-delay: 0.96s; }
+.js .vis--veffect.is-in .v-nodes circle:nth-child(4) { animation-delay: 1.14s; }
+.js .vis--veffect.is-in .v-peak { animation: vPop 0.55s 1.35s cubic-bezier(0.2, 1.7, 0.4, 1) both; }
+
+/* CHOICE: 幹から枝が伸び、選択肢が灯る */
+.vis--choice .v-ends circle { transform-box: fill-box; transform-origin: center; }
+.js .vis--choice .v-branches path { stroke-dasharray: 620; stroke-dashoffset: 620; }
+.js .vis--choice.is-in .v-branches path { animation: vDraw 0.95s 0.25s ease-out forwards; }
+.js .vis--choice.is-in .v-ends circle { animation: vPop 0.45s cubic-bezier(0.2, 1.5, 0.4, 1) both; }
+.js .vis--choice.is-in .v-ends circle:nth-child(1) { animation-delay: 1s; }
+.js .vis--choice.is-in .v-ends circle:nth-child(2) { animation-delay: 1.12s; }
+.js .vis--choice.is-in .v-ends circle:nth-child(3) { animation-delay: 1.24s; }
+
+/* ACTION: 下から突き上げて壁を割り、破片が飛ぶ */
+.vis--action .v-spear { transform-box: fill-box; transform-origin: bottom; }
+.vis--action .v-debris polygon { transform-box: fill-box; transform-origin: center; }
+.js .vis--action .v-debris polygon { opacity: 0; }
+.js .vis--action.is-in .v-spear { animation: vSpear 0.85s 0.25s cubic-bezier(0.15, 0.9, 0.3, 1) both; }
+.js .vis--action.is-in .v-debris polygon { animation: vDebris 0.7s 0.62s ease-out both; }
+.js .vis--action.is-in .v-debris polygon:nth-child(2n) { animation-delay: 0.68s; }
+.js .vis--action.is-in .v-debris polygon:nth-child(3n) { animation-delay: 0.74s; }
+@keyframes vSpear { from { transform: translateY(58%); } to { transform: none; } }
+@keyframes vDebris { from { opacity: 0; transform: scale(0.25); } to { opacity: 1; transform: none; } }
+
+/* CONTINUITY: 輪が閉じ、その中を上へ */
+.vis--continuity .v-rise { transform-box: fill-box; transform-origin: bottom; }
+.js .vis--continuity .v-ring { stroke-dasharray: 1320; stroke-dashoffset: 1320; }
+.js .vis--continuity.is-in .v-ring { animation: vDraw 1.2s 0.2s ease-out forwards; }
+.js .vis--continuity.is-in .v-rise { animation: vRise 0.8s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+@keyframes vRise { from { opacity: 0; transform: translateY(28%); } to { opacity: 1; transform: none; } }
+
+/* HOW I WORK: 視線が夢へ流れ続ける */
+.js .vis--buddy .v-gaze { opacity: 0; }
+.js .vis--buddy.is-in .v-gaze { animation: vFade 0.6s 0.55s ease-out forwards, vFlow 1.5s 1.1s linear infinite; }
+@keyframes vFlow { to { stroke-dashoffset: -38; } }
+
+/* WHAT I DO: 支えがある状態 → 自分で立つ状態 の順に現れる */
+.vis--empower .v-grow { transform-box: fill-box; transform-origin: bottom; }
+.js .vis--empower .v-arrow, .js .vis--empower .v-after, .js .vis--empower .v-grow { opacity: 0; }
+.js .vis--empower.is-in .v-arrow { animation: vFade 0.4s 0.45s ease-out forwards; }
+.js .vis--empower.is-in .v-after { animation: vFade 0.5s 0.75s ease-out forwards; }
+.js .vis--empower.is-in .v-grow { animation: vRise 0.7s 1.15s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+
+/* 経歴の年表: 旗が左から順に立つ */
+.js .timeline .flag { opacity: 0; }
+.js .timeline.is-in .flag { animation: vFlag 0.6s ease-out both; }
+.js .timeline.is-in .flag:nth-of-type(2) { animation-delay: 0.12s; }
+.js .timeline.is-in .flag:nth-of-type(3) { animation-delay: 0.24s; }
+.js .timeline.is-in .flag:nth-of-type(4) { animation-delay: 0.36s; }
+.js .timeline.is-in .flag:nth-of-type(5) { animation-delay: 0.48s; }
+@keyframes vFlag { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+/* ============================================================
    motion
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; animation: none !important; }
+  /* アニメの初期値（透明・線を隠す・ずらす）が残らないよう完成形に戻す */
+  .js [data-reveal] { opacity: 1; transform: none; }
+  .vis * { stroke-dashoffset: 0 !important; opacity: 1 !important; transform: none !important; }
 }

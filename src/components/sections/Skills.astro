@@ -1,6 +1,6 @@
 ---
 import Screen from '../Screen.astro';
-import KeyVisual from '../KeyVisual.astro';
+import SkillsLoop from '../visuals/SkillsLoop.astro';
 import type { Copy } from '../../data/types';
 
 interface Props { copy: Copy['skills'] }
@@ -15,7 +15,6 @@ const { copy } = Astro.props;
       <ul class="dash-list body">
         {copy.knowledge.map((k) => <li>{k}</li>)}
       </ul>
-      <KeyVisual ratio="4 / 3" class="kv--skills" />
     </div>
     <div class="skills-col">
       <h3 class="h2">{copy.toolsTitle}</h3>
@@ -29,4 +28,5 @@ const { copy } = Astro.props;
       ))}
     </div>
   </div>
+  <SkillsLoop class="vis--wide" />
 </Screen>

@@ -1,21 +1,28 @@
 ---
 import Screen from '../Screen.astro';
-import KeyVisual from '../KeyVisual.astro';
+import PillarChoice from '../visuals/PillarChoice.astro';
+import PillarAction from '../visuals/PillarAction.astro';
+import PillarContinuity from '../visuals/PillarContinuity.astro';
 import type { Copy } from '../../data/types';
 
 interface Props { copy: Copy['goals'] }
 const { copy } = Astro.props;
+
+const VISUALS = { choice: PillarChoice, action: PillarAction, continuity: PillarContinuity };
 ---
 
 <Screen id="goals" group="moonshot" class="screen--goals" labelledby="goals-title">
   <p class="kicker">{copy.kicker}</p>
   <h2 class="h2" id="goals-title">{copy.headline}</h2>
   <ul class="pillars">
-    {copy.pillars.map((p) => (
-      <li class="pillar">
-        <h3 class="h3">{p}</h3>
-        <KeyVisual ratio="3 / 5" class="kv--pillar" />
-      </li>
-    ))}
+    {copy.pillars.map((p) => {
+      const Visual = VISUALS[p.visual];
+      return (
+        <li class="pillar">
+          <h3 class="h3">{p.label}</h3>
+          <Visual class="vis--pillar" />
+        </li>
+      );
+    })}
   </ul>
 </Screen>

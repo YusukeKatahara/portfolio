@@ -50,6 +50,7 @@ export const en: Copy = {
     social: [
       { label: 'LinkedIn', key: 'linkedin' },
       { label: 'GitHub', key: 'github' },
+      { label: 'researchmap', key: 'researchmap' },
     ],
   },
 
@@ -163,7 +164,28 @@ export const en: Copy = {
         'Measuring and analysing physiological internal states that cannot be seen directly, then interpreting them from an engineering perspective.',
       ],
       footnote: 'Original papers: TBD (under review)',
-      kvRatio: '16 / 9',
+      plates: [
+        {
+          visual: 'tavns-why',
+          weight: 1.25,
+          title: 'Why the ear',
+          caption:
+            'Implanted VNS reaches the vagus nerve through surgery in the neck. taVNS reaches the same nerve from the outside, with a clip on the ear.',
+        },
+        {
+          visual: 'tavns-rig',
+          weight: 1.8,
+          title: 'The rig',
+          caption:
+            'A single session records eight channels at once: ECG, pulse wave, respiration, skin conductance, pupil diameter, continuous blood pressure, and wearable ECG and PPG.',
+        },
+        {
+          visual: 'tavns-panel',
+          title: 'The instrument',
+          caption:
+            'The recording software I built. Four live waveforms, the stimulation phase running pre to post, and one timer that keeps every channel on the same clock.',
+        },
+      ],
     },
     {
       id: 'v-effect',
@@ -179,14 +201,31 @@ export const en: Copy = {
         { key: 'appstore', label: 'App Store', url: 'https://apps.apple.com/jp/app/v-effect/id6763709764' },
         { key: 'web', label: 'web', url: 'https://veffect.web.app/' },
       ],
-      kvRatio: '16 / 9',
+      plates: [
+        {
+          visual: 'veffect-app',
+          title: 'It shipped',
+          caption:
+            'Not a prototype. V EFFECT is on the App Store, released and run day to day by the developer I handed it to.',
+        },
+        {
+          visual: 'veffect-growth',
+          title: 'The winner effect',
+          caption:
+            'The mechanic underneath it. One small win raises the odds of the next, so effort compounds instead of resetting to zero.',
+        },
+      ],
     },
   ],
 
   goals: {
     kicker: 'MOONSHOT',
     headline: 'EVERYONE HAS A CHANCE.',
-    pillars: ['CHOICE', 'ACTION', 'CONTINUITY'],
+    pillars: [
+      { label: 'CHOICE', visual: 'choice' },
+      { label: 'ACTION', visual: 'action' },
+      { label: 'CONTINUITY', visual: 'continuity' },
+    ],
   },
 
   milestones: {

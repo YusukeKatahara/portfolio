@@ -39,7 +39,7 @@ const groundPath = [
 ].join(' ');
 ---
 
-<figure class="timeline">
+<figure class="timeline" data-reveal>
   <svg class="timeline-svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="timeline-desc" focusable="false">
     <desc id="timeline-desc">{points.map((p) => `${p.year}: ${p.label}`).join('. ')}</desc>
     <path d={groundPath} fill="currentColor" />

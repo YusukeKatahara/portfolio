@@ -1,6 +1,7 @@
 ---
 import Screen from '../Screen.astro';
 import Tabs from '../Tabs.astro';
+import EmpowerSteps from '../visuals/EmpowerSteps.astro';
 import type { Copy } from '../../data/types';
 
 interface Props { copy: Copy['what'] }
@@ -12,8 +13,13 @@ const tabs = [
 ---
 
 <Screen id="what-i-do" group="about" class="screen--what" labelledby="what-title">
-  <h2 class="h2" id="what-title">{copy.title}</h2>
-  <p class="lead">{copy.lead}</p>
+  <div class="what-head">
+    <div>
+      <h2 class="h2" id="what-title">{copy.title}</h2>
+      <p class="lead">{copy.lead}</p>
+    </div>
+    <EmpowerSteps class="vis--head" />
+  </div>
 
   <Tabs name="audience" tabs={tabs} initial="clients" barClass="tab-bar--audience">
     <div slot="clients" class="what-clients">

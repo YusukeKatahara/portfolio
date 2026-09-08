@@ -17,6 +17,14 @@ export type Hobby = { label: string; note?: string };
 
 export type SkillGroup = { title: string; items: string[] };
 
+/** MOONSHOT の 3 本柱。visual は下に置く説明図（src/components/visuals/）を選ぶ */
+export type Pillar = { label: string; visual: 'choice' | 'action' | 'continuity' };
+
+/** 本文の下に並べる図（src/components/visuals/）。1 プロジェクト内では同じ縦横比のものを並べる */
+export type PlateVisual = 'tavns-why' | 'tavns-rig' | 'tavns-panel' | 'veffect-app' | 'veffect-growth';
+/** weight は帯の中での横幅比（既定 1）。情報量の多い図に多めに割り当てる */
+export type Plate = { visual: PlateVisual; title: string; caption: string; weight?: number };
+
 export type Project = {
   id: string;
   name: string;
@@ -25,7 +33,7 @@ export type Project = {
   role: string[];
   footnote?: string;
   links?: { key: string; label: string; url: string }[];
-  kvRatio: string;            // KEY VISUAL 余白の縦横比（例 '16 / 9'）
+  plates: Plate[];            // 本文の下に並べる説明図
 };
 
 export type Milestone = { label: string; done?: boolean };
@@ -34,7 +42,7 @@ export type Goal = { title: string; milestones: Milestone[] };
 export type Copy = {
   meta: { title: string; description: string };
   nav: NavGroup[];
-  hero: { lines: string[]; tagline: string; social: { label: string; key: 'linkedin' | 'github' }[] };
+  hero: { lines: string[]; tagline: string; social: { label: string; key: 'linkedin' | 'github' | 'researchmap' }[] };
   who: {
     name: string;
     triad: { verb: string; noun: string }[];
@@ -54,7 +62,7 @@ export type Copy = {
   };
   skills: { knowledgeTitle: string; knowledge: string[]; toolsTitle: string; tools: SkillGroup[] };
   projects: Project[];
-  goals: { kicker: string; headline: string; pillars: string[] };
+  goals: { kicker: string; headline: string; pillars: Pillar[] };
   milestones: { goals: Goal[] };
   contact: {
     title: string;

@@ -1,0 +1,40 @@
+---
+/**
+ * 侵襲的な VNS と taVNS の比較。
+ * ここは説明図ではなく研究で実際に使っている図なので、描き直さず実物を並べる。
+ * 画像は assets/ の原本を正方形に切り出したもの（切り出し範囲は README）。
+ */
+import { Image } from 'astro:assets';
+import implant from '../../assets/tavns-implant.jpg';
+import ear from '../../assets/tavns-ear.png';
+
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+const sizes = '(max-width: 900px) 42vw, 16vw';
+---
+
+<figure class:list={['vis', 'vis--why', cls]} data-reveal>
+  <div class="why-shot">
+    <Image
+      src={implant}
+      alt="A cutaway side view of a head: an implanted cuff electrode wrapped around the vagus nerve in the neck, reached through a surgical incision."
+      widths={[240, 360, 480]}
+      sizes={sizes}
+      loading="lazy"
+    />
+    <p class="why-label">IMPLANT</p>
+    <p class="why-note">SURGERY IN THE NECK</p>
+  </div>
+
+  <div class="why-shot">
+    <Image
+      src={ear}
+      alt="A person wearing a taVNS electrode clipped to the ear, stimulating the auricular branch of the same vagus nerve."
+      widths={[240, 360, 480]}
+      sizes={sizes}
+      loading="lazy"
+    />
+    <p class="why-label why-label--ac">taVNS</p>
+    <p class="why-note">A CLIP ON THE EAR</p>
+  </div>
+</figure>

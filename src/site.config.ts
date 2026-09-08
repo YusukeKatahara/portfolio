@@ -6,6 +6,7 @@ export const WEB3FORMS_ACCESS_KEY = '36a5dd56-23cf-4399-8b5b-62a88a3d7dc0';
 export const SOCIAL = {
   github: 'https://github.com/YusukeKatahara',
   linkedin: 'https://www.linkedin.com/in/yusuke-katahara-8979b9400/',
+  researchmap: 'https://researchmap.jp/y-katahara',
 } as const;
 
 // メールアドレスは bot 収集対策として分割して埋め込み、ブラウザ側で結合して表示する。

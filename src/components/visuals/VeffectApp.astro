@@ -1,0 +1,23 @@
+---
+/**
+ * V EFFECT のアプリアイコン。
+ * ここだけは説明図ではなく実物なので、SVG に描き直さず画像をそのまま置く。
+ * 角丸は CSS 側（.app-icon）で付ける。元画像は正方形で角が立っているため。
+ */
+import { Image } from 'astro:assets';
+import icon from '../../assets/veffect-icon.png';
+
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<figure class:list={['vis', 'vis--app', cls]} data-reveal>
+  <Image
+    class="app-icon"
+    src={icon}
+    alt="The V EFFECT app icon: a white V with a flame, on black."
+    widths={[320, 480, 640]}
+    sizes="(max-width: 900px) 60vw, 22vw"
+    loading="lazy"
+  />
+</figure>

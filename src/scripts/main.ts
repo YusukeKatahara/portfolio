@@ -6,9 +6,12 @@
  * 3. mobile menu: 上部バーのボタンで全画面メニューを開閉
  * 4. contact form: Web3Forms へ送信
  * 5. email: 分割して埋め込んだメールアドレスをブラウザ側で結合して表示
+ * 6. reveal: 説明図が画面に入ったら描き出す
  */
 
 const body = document.body;
+
+document.documentElement.classList.add('js');
 
 /* ============================================================
    1. scrollspy
@@ -230,8 +233,33 @@ function initEmail() {
   });
 }
 
+/* ============================================================
+   6. reveal（説明図）
+   ============================================================ */
+function initReveal() {
+  const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  if (!targets.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    targets.forEach((t) => t.classList.add('is-in'));
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target); // 一度出したら戻さない
+      }
+    },
+    { rootMargin: '0px 0px -10% 0px', threshold: 0.12 }
+  );
+  targets.forEach((t) => io.observe(t));
+}
+
 initScrollSpy();
 initTabs();
 initMenu();
 initContactForm();
 initEmail();
+initReveal();

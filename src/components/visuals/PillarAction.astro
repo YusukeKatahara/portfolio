@@ -1,0 +1,24 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure kind="action" class={cls} viewBox="0 0 480 800"
+  title="An arrow driven upward through a solid wall, breaking it open and throwing the pieces aside.">
+  <g class="v-wall">
+    <path d="M8 440 L196 418 L184 470 L206 522 L8 544 Z" />
+    <path d="M472 440 L288 418 L300 470 L278 522 L472 544 Z" />
+  </g>
+  <g class="v-debris">
+    <polygon points="150,378 194,360 172,400" /><polygon points="298,364 346,354 316,394" />
+    <polygon points="96,394 138,382 116,410" /><polygon points="352,396 396,388 366,418" />
+    <polygon points="52,350 84,342 66,368" /><polygon points="406,344 440,356 406,368" />
+    <polygon points="166,572 210,586 176,602" /><polygon points="286,578 332,566 306,600" />
+    <polygon points="98,596 132,608 102,616" /><polygon points="368,600 404,590 378,618" />
+  </g>
+  <g class="v-spear">
+    <rect x="212" y="316" width="58" height="484" />
+    <polygon class="ac" points="241,168 149,320 333,320" />
+  </g>
+</Figure>

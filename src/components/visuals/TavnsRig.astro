@@ -1,0 +1,36 @@
+---
+/**
+ * 実験の全体像。研究でそのまま使っている図を取り込んで表示する。
+ * ラベルはページ側のフォント・サイズで上書きする（原図の 12px はこの表示幅だと読めないため）。
+ * .st0 … のクラス名はページ全体に効いてしまうので rig-st0 … に付け替える。
+ */
+import raw from '../../assets/tavns-rig.svg?raw';
+
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+
+/**
+ * ラベルを 12px から 20px に拡大した分、原図の位置のままだと図に重なる 4 つだけずらす。
+ * 原本（src/assets/tavns-rig.svg）は書き換えず、ここで寄せる。
+ */
+const MOVED: [string, string][] = [
+  ['translate(232.04 290.22)', 'translate(168 284)'], // PPG (wearable device) — 頭のセンサに被る
+  ['translate(220.49 414.62)', 'translate(188 428)'], // ECG (wearable device) — 胴とケーブルに被る
+  ['translate(720.07 373.56)', 'translate(726 378)'], // PPG — 右手の丸に被る
+  ['translate(77.38 357.01)', 'translate(48 357)'],   // GSR — 電極パッドに被る
+];
+
+const svg = MOVED.reduce((acc, [from, to]) => acc.replace(from, to), raw)
+  .replace(/<\?xml[\s\S]*?\?>/, '')
+  .replace(/<!--[\s\S]*?-->/g, '')
+  .replace(/\.st(\d+)\b/g, '.rig-st$1')
+  .replace(/class="st(\d+)"/g, 'class="rig-st$1"')
+  .replace('viewBox="0 0 926.71 595.28"', 'viewBox="-12 106 1010 452"')
+  .replace(
+    '<svg ',
+    '<svg role="img" aria-label="One subject wired for a single session: taVNS on the ear, with pupil diameter, wearable PPG and ECG, skin conductance, respiration, continuous blood pressure, finger PPG and ECG all recorded at the same time." '
+  )
+  .trim();
+---
+
+<figure class:list={['vis', 'vis--rig', cls]} data-reveal set:html={svg} />

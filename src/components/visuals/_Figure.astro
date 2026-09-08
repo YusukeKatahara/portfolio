@@ -1,0 +1,23 @@
+---
+/**
+ * 説明図の共通ラッパー。
+ * 色は CSS（global.css の .vis）側で決める:
+ *   currentColor = --ink / .ac,.acs = --accent / .bg,.bgs = --bg（黒ベタを背景色で抜く）
+ * data-reveal が付いた figure は画面に入ると is-in が足され、内部のアニメが走る。
+ */
+interface Props {
+  viewBox: string;
+  title: string;
+  class?: string;
+  kind: string; // アニメーションの出し分け（.vis--skills など）
+}
+const { viewBox, title, class: cls, kind } = Astro.props;
+const uid = `vis-${kind}`;
+---
+
+<figure class:list={['vis', `vis--${kind}`, cls]} data-reveal>
+  <svg viewBox={viewBox} role="img" aria-labelledby={uid} focusable="false">
+    <title id={uid}>{title}</title>
+    <slot />
+  </svg>
+</figure>

@@ -1,25 +1,51 @@
 ---
-import KeyVisual from '../KeyVisual.astro';
+/**
+ * HERO。3行のコピー自体が絵になっている。
+ * - 3行とも同じ幅に両端揃えする（1文字ずつを flex の space-between で配る）
+ * - BIG / DOG / DIG だけ紫。縦に拾うとドメイン名 bigdogdig になる
+ * - 3行の下からタグラインまでの間に「地面」があり、そこから下は色が反転する（.hero-ground）
+ */
 import type { Copy } from '../../data/types';
 import { SOCIAL } from '../../site.config';
 
 interface Props { copy: Copy['hero'] }
 const { copy } = Astro.props;
+
+const KEY = new Set(['BIG', 'DOG', 'DIG']);
 ---
 
 <section class="screen screen--hero" id="hero" data-section data-group="hero" aria-label="Intro">
   <div class="screen-inner hero">
-    <div class="hero-text">
-      <h1 class="hero-lines">
-        {copy.lines.map((l) => <span class="hero-line">{l}</span>)}
-      </h1>
-      <p class="hero-tagline">{copy.tagline}</p>
-      <ul class="hero-social" aria-label="Social links">
-        {copy.social.map((s) => (
-          <li><a href={SOCIAL[s.key]} target="_blank" rel="noopener">{s.label}<span aria-hidden="true"> ↗</span></a></li>
-        ))}
-      </ul>
+    <h1 class="hero-lines">
+      {copy.lines.map((line, i) => (
+        <span class:list={['hero-line', `hero-line--${i + 1}`]}>
+          {/* 読み上げは行のまま。見た目だけ 1 文字ずつに割る */}
+          <span class="sr-only">{line}</span>
+          <span class="hero-line-inner" aria-hidden="true">
+            {line.split(' ').map((word, wi) => (
+              <>
+                {wi > 0 && <span class="hero-sp"></span>}
+                {[...word].map((ch) => (
+                  <span class:list={['hero-ch', { 'hero-key': KEY.has(word) }]}>{ch}</span>
+                ))}
+              </>
+            ))}
+          </span>
+        </span>
+      ))}
+      <span class="hero-ground" aria-hidden="true"></span>
+    </h1>
+
+    <div class="hero-under">
+      <div class="hero-meta">
+        <p class="hero-tagline">{copy.tagline}</p>
+        <ul class="hero-social" aria-label="Social links">
+          {copy.social.map((s) => (
+            <li><a href={SOCIAL[s.key]} target="_blank" rel="noopener">{s.label}<span aria-hidden="true"> ↗</span></a></li>
+          ))}
+        </ul>
+      </div>
+      <p class="hero-scroll" aria-hidden="true">SCROLL <span>↓</span></p>
     </div>
-    <KeyVisual ratio="4 / 3" class="kv--hero" />
   </div>
 </section>

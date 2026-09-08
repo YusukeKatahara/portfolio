@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 926.71 595.28">
+  <!-- Generator: Adobe Illustrator 30.7.0, SVG Export Plug-In . SVG Version: 2.1.4 Build 114)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: #3490bf;
+      }
+
+      .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8, .st9, .st10, .st11, .st12 {
+        stroke-miterlimit: 10;
+      }
+
+      .st0, .st1, .st2, .st3, .st4, .st6, .st7, .st8, .st9, .st10, .st11, .st12 {
+        stroke: #040000;
+      }
+
+      .st1, .st5 {
+        stroke-width: 2px;
+      }
+
+      .st1, .st5, .st8 {
+        fill: none;
+      }
+
+      .st2 {
+        fill: #e71f19;
+      }
+
+      .st3 {
+        fill: #c5950f;
+      }
+
+      .st4 {
+        fill: #040000;
+      }
+
+      .st13 {
+        fill: #231815;
+        font-family: Meiryo, Meiryo;
+        font-size: 12px;
+      }
+
+      .st5 {
+        stroke: #231815;
+      }
+
+      .st6 {
+        fill: #faf8cb;
+      }
+
+      .st7 {
+        fill: #664498;
+      }
+
+      .st9 {
+        fill: #f0eb4c;
+      }
+
+      .st10 {
+        fill: #666;
+      }
+
+      .st11 {
+        fill: #348ccc;
+      }
+
+      .st12 {
+        fill: #71ba2b;
+      }
+    </style>
+  </defs>
+  <g id="_レイヤー_2" data-name="レイヤー_2">
+    <ellipse class="st6" cx="420.56" cy="283.64" rx="44.9" ry="49.55"/>
+    <rect class="st6" x="362.49" y="333.19" width="116.9" height="203.61" rx="17.03" ry="17.03"/>
+    <rect class="st6" x="271.69" y="333.19" width="89.81" height="26.32" rx="4.26" ry="4.26"/>
+    <rect class="st6" x="157.65" y="333.19" width="113.03" height="26.32" rx="4.26" ry="4.26"/>
+    <rect class="st6" x="480.4" y="333.19" width="89.81" height="26.32" rx="4.26" ry="4.26"/>
+    <rect class="st6" x="571.2" y="333.19" width="113.03" height="26.32" rx="4.26" ry="4.26"/>
+    <circle class="st6" cx="702.65" cy="346.35" r="17.42"/>
+    <circle class="st6" cx="139.24" cy="346.35" r="17.42"/>
+  </g>
+  <g id="_レイヤー_3" data-name="レイヤー_3">
+    <rect class="st11" x="183.98" y="324.28" width="30.19" height="9.29"/>
+    <rect class="st11" x="406.56" y="385.32" width="30.19" height="9.29"/>
+    <rect class="st10" x="358.9" y="389.96" width="123.5" height="12.35"/>
+    <rect class="st10" x="359.2" y="366.2" width="123.5" height="14.71"/>
+    <line class="st1" x1="420.37" y1="221.83" x2="420.37" y2="258.09"/>
+    <rect class="st10" x="193.55" y="333.19" width="10.84" height="26.32"/>
+    <circle class="st2" cx="461.61" cy="346.35" r="5.61"/>
+    <circle class="st2" cx="420.56" cy="414.62" r="5.61"/>
+    <circle class="st2" cx="467.22" cy="519.38" r="5.61"/>
+    <rect class="st10" x="534.19" y="329.84" width="20.9" height="33.02"/>
+    <rect class="st10" x="652.53" y="335.69" width="13.49" height="21.31"/>
+    <rect class="st12" x="720.07" y="335.69" width="9.46" height="9.46"/>
+    <rect class="st3" x="375.65" y="258.09" width="89.43" height="22.45"/>
+    <path class="st1" d="M374.79,267.41c0-25.17,20.41-45.58,45.58-45.58s45.58,20.41,45.58,45.58"/>
+    <rect class="st12" x="372.38" y="291.64" width="6.27" height="13.16"/>
+    <rect class="st4" x="464.09" y="283.64" width="6.27" height="13.16"/>
+    <rect class="st4" x="458.47" y="304.06" width="6.27" height="13.16" transform="translate(706.06 810.47) rotate(-150)"/>
+    <rect class="st9" x="562.06" y="137.86" width="30.19" height="24" transform="translate(727.02 -427.29) rotate(90)"/>
+    <rect class="st7" x="110.58" y="346.84" width="10.24" height="10.24"/>
+    <rect class="st7" x="115.7" y="330.57" width="10.24" height="10.24"/>
+    <path class="st1" d="M577.16,134.77c-47.61-23.77-74.33,64.48-70.06,99.32,5.23,42.65-43.01,79.82-43.01,79.82"/>
+    <path class="st1" d="M470.36,290.22c34.41,0,14.2-108.82,36.73-132.77,18.21-19.35,75.1-65.26,75.1-22.68"/>
+    <path class="st1" d="M204.38,324.28c0-24.39,168-26.06,168-26.06"/>
+    <path class="st1" d="M199.07,324.28c0-42.19-165.27-95.23-88.5,27.68"/>
+    <path class="st1" d="M190.45,324.28c0-30.58-126.11-59.04-69.63,6.29"/>
+    <path class="st9" d="M677.42,258.09"/>
+    <path class="st9" d="M659.28,345.15"/>
+    <path class="st1" d="M461.61,346.35s42.78-8.29,44.52,34.56-6,98.99,59.03,98.99"/>
+    <path class="st1" d="M420.56,414.62c0,54.82,72.6,69.32,144.6,69.81"/>
+    <path class="st1" d="M467.22,519.38c48.39,0,10.45-32.03,97.94-31.26"/>
+    <path class="st1" d="M544.64,329.84c0-9.81,87.1,10.42,87.1-33.04,0-40.68,45.68-38.71,45.68-38.71"/>
+    <path class="st1" d="M659.28,335.69c-18.02-32.32-18.02-49.36,18.14-70.85"/>
+    <path class="st1" d="M359.2,373.56c-154.81,0-279.87,1.77-279.87,46.42"/>
+    <rect class="st0" x="219.5" y="167.11" width="54.47" height="38.55"/>
+    <path class="st5" d="M374.79,275.12c-50.4,0-40.18-88.74-99.95-88.74"/>
+    <rect class="st0" x="565.95" y="465.2" width="54.47" height="38.55"/>
+    <rect class="st0" x="675.42" y="243.6" width="54.47" height="38.55"/>
+    <rect class="st0" x="52.09" y="419.98" width="54.47" height="38.55"/>
+    <path class="st8" d="M729.53,340.42c69.44,0,39.38,4.73,93.59,4.73"/>
+    <rect class="st0" x="823.12" y="325.87" width="45.69" height="38.55"/>
+  </g>
+  <g id="_レイヤー_4" data-name="レイヤー_4">
+    <text class="st13" transform="translate(565.95 524.99)"><tspan x="0" y="0">ECG</tspan></text>
+    <text class="st13" transform="translate(219.5 160.87)"><tspan x="0" y="0">pupil diameter</tspan></text>
+    <text class="st13" transform="translate(690.06 236.92)"><tspan x="0" y="0">continuous blood pressure</tspan></text>
+    <text class="st13" transform="translate(720.07 373.56)"><tspan x="0" y="0">PPG</tspan></text>
+    <text class="st13" transform="translate(46.21 479.9)"><tspan x="0" y="0">Respiration</tspan></text>
+    <text class="st13" transform="translate(77.38 357.01)"><tspan x="0" y="0">GSR</tspan></text>
+    <text class="st13" transform="translate(232.04 290.22)"><tspan x="0" y="0">PPG (wearable device)</tspan></text>
+    <text/>
+    <text class="st13" transform="translate(220.49 414.62)"><tspan x="0" y="0">ECG (wearable device)</tspan></text>
+    <text class="st13" transform="translate(593.18 140.34)"><tspan x="0" y="0">taVNS</tspan></text>
+  </g>
+</svg>

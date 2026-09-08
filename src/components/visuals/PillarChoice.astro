@@ -1,0 +1,19 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure kind="choice" class={cls} viewBox="0 0 480 800"
+  title="One path branches into three, and one of them is yours to take.">
+  <path class="v-trunk" d="M240 800 L240 600" stroke="currentColor" stroke-width="62" fill="none" />
+  <g class="v-branches" fill="none" stroke="currentColor" stroke-width="50">
+    <path d="M240 612 C240 490 90 512 90 380 L90 216" />
+    <path d="M240 612 L240 216" />
+    <path d="M240 612 C240 490 390 512 390 380 L390 216" />
+  </g>
+  <g class="v-ends">
+    <circle cx="90" cy="176" r="52" /><circle cx="240" cy="176" r="52" />
+    <circle class="ac" cx="390" cy="176" r="52" />
+  </g>
+</Figure>

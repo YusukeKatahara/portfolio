@@ -1,0 +1,44 @@
+---
+import Figure from './_Figure.astro';
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+
+<Figure
+  kind="skills"
+  class={cls}
+  viewBox="0 60 800 430"
+  title="A closed loop: the body produces a signal, the signal becomes a model, and the model feeds control back into the body."
+>
+  <text x="130" y="110" font-size="40" text-anchor="middle">BODY</text>
+  <text x="400" y="110" font-size="40" text-anchor="middle">SIGNAL</text>
+  <text x="681" y="110" font-size="40" text-anchor="middle">MODEL</text>
+
+  <g class="v-node">
+    <circle cx="130" cy="185" r="44" />
+    <path d="M60 325 C60 268 86 240 130 240 C174 240 200 268 200 325 Z" />
+  </g>
+
+  <g class="v-arrow"><rect x="218" y="216" width="48" height="26" /><polygon points="262,207 298,229 262,251" /></g>
+
+  <polyline
+    class="v-wave"
+    points="300,250 336,250 348,230 360,250 382,250 392,282 402,152 412,272 422,250 442,250 454,224 468,250 500,250"
+    fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"
+  />
+
+  <g class="v-arrow"><rect x="506" y="216" width="48" height="26" /><polygon points="550,207 586,229 550,251" /></g>
+
+  <g class="v-node">
+    <rect x="596" y="144" width="170" height="170" />
+    <line class="bgs" x1="618" y1="292" x2="744" y2="168" stroke-width="10" stroke-linecap="round" />
+    <g class="bg v-dots">
+      <circle cx="626" cy="300" r="10" /><circle cx="648" cy="240" r="10" /><circle cx="668" cy="268" r="10" />
+      <circle cx="692" cy="206" r="10" /><circle cx="712" cy="222" r="10" /><circle cx="740" cy="160" r="10" />
+    </g>
+  </g>
+
+  <path class="acs v-loop" d="M681 350 L681 455 L130 455 L130 385" fill="none" stroke-width="26" stroke-linejoin="round" />
+  <polygon class="ac v-late" points="130,337 102,387 158,387" />
+  <text class="ac v-late" x="405" y="425" font-size="40" text-anchor="middle">CONTROL</text>
+</Figure>

@@ -12,3 +12,5 @@ npm-debug.log*
 # OS
 Thumbs.db
 .DS_Store
+# 図の元素材（切り出したものだけ src/assets/ に置く）
+/assets/

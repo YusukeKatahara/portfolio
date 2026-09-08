@@ -1,5 +1,6 @@
 ---
 import Screen from '../Screen.astro';
+import BuddyDream from '../visuals/BuddyDream.astro';
 import type { Copy } from '../../data/types';
 
 interface Props { copy: Copy['how'] }
@@ -17,4 +18,5 @@ const { copy } = Astro.props;
   <div class="how-close">
     {copy.close.map((l, i) => <p class:list={['body', { 'lead-soft': i === 3 }]}>{l}</p>)}
   </div>
+  <BuddyDream class="vis--band" />
 </Screen>
