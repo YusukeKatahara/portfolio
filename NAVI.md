@@ -4,7 +4,7 @@
 純白の紙に Impact の黒、差し色は「いま居る場所」を示す紫のドットだけ。
 
 - モックアップ: `docs/mockup_en.pdf`（`.ai` 原本も同ディレクトリ）
-- 技術: [Astro](https://astro.build)（静的生成） + Cloudflare Pages
+- 技術: [Astro](https://astro.build)（静的生成） + Cloudflare Workers（Static Assets）
 - 言語: 英語のみ（日本語版は将来 `/ja/` として追加予定）
 
 ## 画面構成（上から順に）
@@ -117,10 +117,23 @@ npm run preview    # ビルド結果の確認
 [Web3Forms](https://web3forms.com) 経由で送信。アクセスキーは `src/site.config.ts`（公開前提の仕様）。
 メールアドレスは bot 収集対策として分割して埋め込み、ブラウザ側で結合して表示する。
 
-## デプロイ（Cloudflare Pages）
+## デプロイ（Cloudflare Workers、手動）
 
-GitHub（`YusukeKatahara/portfolio`）へ push すると自動デプロイ。
-ビルド設定: Framework preset = **Astro** / Build command = `npm run build` / Output = `dist`
+GitHub への push だけでは反映されない。ビルドしたものを **手元から `wrangler` で明示的にデプロイ**する。
+
+Worker 名は `portfolio`。ルーティング（`*.bigdogdig.com/*` → `portfolio`）は Cloudflare 側に設定済みで、
+リポジトリ側の設定は `wrangler.toml` に集約している。
+
+```bash
+git pull            # GitHub 側で先に編集した場合
+npm run build       # dist/ を生成
+npx wrangler deploy # dist/ を portfolio（bigdogdig.com）へ反映
+```
+
+- 初回 / トークン失効時（実績: 約24時間で失効）は `npx wrangler deploy` の前に `npx wrangler login` が必要。
+  ブラウザで Cloudflare アカウント（y.katahara.academia@gmail.com）にログイン・許可する
+- デプロイ後は `https://bigdogdig.com` を確認する。CDN キャッシュは新バージョンへ即時切り替わる
+- `wrangler.toml` の `compatibility_date` / `[assets] directory` を変えない限り、上記コマンドだけで完結する
 
 ## 構成
 
