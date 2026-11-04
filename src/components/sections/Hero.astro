@@ -38,13 +38,23 @@ const KEY = new Set(['BIG', 'DOG', 'DIG']);
 
     <div class="hero-under">
       <div class="hero-meta">
-        <p class="hero-tagline">{copy.tagline}</p>
+        <p class="hero-name">{copy.name}</p>
         <ul class="hero-social" aria-label="Social links">
           {copy.social.map((s) => (
             <li><a href={SOCIAL[s.key]} target="_blank" rel="noopener">{s.label}<span aria-hidden="true"> ↗</span></a></li>
           ))}
+          <li><a href="/cv/">{copy.cvLabel}<span aria-hidden="true"> ↗</span></a></li>
         </ul>
       </div>
+      <p class="hero-summary">{copy.summary}</p>
+      <ul class="hero-highlights" aria-label="Highlights">
+        {copy.highlights.map((h) => (
+          <li>
+            <span class="hero-hl-value">{h.value}</span>
+            <span class="hero-hl-label">{h.label}</span>
+          </li>
+        ))}
+      </ul>
       <p class="hero-scroll" aria-hidden="true">SCROLL <span>↓</span></p>
     </div>
   </div>

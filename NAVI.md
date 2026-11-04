@@ -18,7 +18,7 @@
 | SKILLS（Knowledge / Tools） | `#skills` | SKILLS | `SkillsLoop` 体→信号→モデル→制御 |
 | PROJECTS — taVNS | `#tavns` | PROJECTS › taVNS | 3枚組 `TavnsWhy` / `TavnsRig` / `TavnsPanel` |
 | PROJECTS — V EFFECT | `#v-effect` | PROJECTS › V EFFECT | 2枚組 `VeffectApp` / `VeffectGrowth` |
-| MOONSHOT — GOALs（CHOICE / ACTION / CONTINUITY） | `#goals` | MOONSHOT › GOALs | `PillarChoice` / `PillarAction` / `PillarContinuity` |
+| MOONSHOT — Goals（CHOICE / ACTION / CONTINUITY） | `#goals` | MOONSHOT › Goals | `PillarChoice` / `PillarAction` / `PillarContinuity` |
 | MOONSHOT — MILESTONES（チェックリスト） | `#milestones` | MOONSHOT › MILESTONES | 7つのゴールを貫く一本の道 |
 | CONTACT（For clients フォーム / For recruiters 手紙） | `#contact` | CONTACT | — |
 
@@ -67,6 +67,15 @@ npm run preview    # ビルド結果の確認
 - 経歴の年表（旗）は `who.career` の配列。点数を変えても等間隔に自動配置される
 - プロジェクトの図は `copy.en.ts` の `plates[]`（`visual` で図を選び、`title` と `caption` を添える）。横幅は `weight` の比で決まる（既定 1。情報量の多い図に多めに振る）。図・見出し・説明の行は `subgrid` で揃うので、縦横比は figure ごとに違ってよい。MOONSHOT の柱は `pillars[].visual`
 
+### 2026-11-05 改修メモ
+
+- **HERO 下部**: 名前・一文サマリ・実績4点・SNS/CV リンクを地面の下に置いた（文言は `copy.hero`）。`--hero-w` の高さ上限は 80vh に下げてある
+- **ポートレート差し込み口**: `src/assets/portrait.jpg`（.png / .webp でも可）を置くと Who I am の名前横に自動で写真が出る。無い間は「YK」モノグラムパネル（DIG · BUILD · TEST の帯付き）が表示される
+- **CV**: `/cv/`（`src/pages/cv.astro`）。copy と config だけから生成するので、事実を直すときは copy 側だけ直せばよい。印刷 CSS 付き（PDF が要る場合はブラウザ印刷で保存）
+- **OGP**: PNG は置かない。`src/pages/og.png.ts` がビルド時に SVG を sharp で焼いて生成する
+- **論文の扱い**: 論文は「記録」であって売り文句にしない。HERO・OGP・メタ説明には載せない。引用は taVNS 脚注と CV の Publications に通常の書誌情報（DOI リンク付き）としてのみ置く
+- **フッター**: `src/components/Footer.astro`（SNS・メール・CV・Back to top）
+
 ## 図（`src/components/visuals/`）
 
 読まなくても内容が伝わることを狙った説明図。原則はインライン SVG で、外部画像もライブラリも使わない。
@@ -100,8 +109,8 @@ npm run preview    # ビルド結果の確認
 
 - `.st0 …` → `.rig-st0 …` へ改名（インライン SVG の `<style>` はページ全体に効くため）
 - viewBox を余白の分だけ詰める（`0 0 926.71 595.28` → `-12 106 1010 452`）
-- ラベルは `.vis--rig text` で 20px・ページのフォントに置き換える。原図の 12px はこの表示幅では読めないため。
-  拡大すると図に重なる 4 つ（`PPG (wearable device)` / `ECG (wearable device)` / `PPG` / `GSR`）だけ、
+- ラベルは `.vis--rig text` で 25px・ページのフォントに置き換え、白いハロ（縁取り）で配線の上でも読めるようにする。原図の 12px はこの表示幅では読めないため。
+  拡大すると図に重なる・はみ出す 5 つ（`PPG (wearable device)` / `ECG (wearable device)` / `PPG` / `GSR` / `continuous blood pressure`）だけ、
   コンポーネント内の `MOVED` で位置を寄せている
 
 描くときの決まり:

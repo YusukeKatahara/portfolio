@@ -8,7 +8,7 @@ export const en: Copy = {
   meta: {
     title: 'Yusuke Katahara | bigdogdig.com',
     description:
-      'A portfolio of Yusuke Katahara, a doctoral student in engineering. Dream big, be your dog, dig deeper.',
+      'Portfolio of Yusuke Katahara — doctoral student in neuroengineering at Niigata University. I research taVNS and build the instruments that measure what it does.',
   },
 
   nav: [
@@ -37,7 +37,7 @@ export const en: Copy = {
       label: 'MOONSHOT',
       target: 'goals',
       subs: [
-        { id: 'goals', label: 'GOALs' },
+        { id: 'goals', label: 'Goals' },
         { id: 'milestones', label: 'MILESTONES' },
       ],
     },
@@ -46,7 +46,17 @@ export const en: Copy = {
 
   hero: {
     lines: ['DREAM BIG', 'BE YOUR DOG', 'DIG DEEPER'],
+    name: 'Yusuke Katahara',
     tagline: 'A portfolio of Yusuke Katahara, a doctoral student in engineering.',
+    summary:
+      'Doctoral student in neuroengineering at Niigata University. I study taVNS — non-invasive vagus nerve stimulation — and build the instruments that measure what it does.',
+    highlights: [
+      { value: 'taVNS', label: 'Non-invasive neuromodulation research' },
+      { value: '8 channels', label: 'Recorded at once by the system I built' },
+      { value: 'App Store', label: 'V EFFECT — shipped, not a prototype' },
+      { value: 'Ph.D. 2029', label: 'Doctoral program, Niigata University' },
+    ],
+    cvLabel: 'CV',
     social: [
       { label: 'LinkedIn', key: 'linkedin' },
       { label: 'GitHub', key: 'github' },
@@ -73,14 +83,14 @@ export const en: Copy = {
     style: {
       lead: 'How I think, whatever the problem is.',
       points: [
-        { title: 'First principles', body: 'Break the problem down to what is certainly true, then rebuild from there.' },
-        { title: 'Abduction', body: 'Start from the surprising fact. Guess the most plausible explanation, then test it.' },
-        { title: 'Inverse problems', body: 'Start from the outcome you want, and work backwards to the cause.' },
-        { title: 'Feedback theory', body: 'Design the loop, not the single step. What is measured, and what corrects it?' },
-        { title: 'TRIZ', body: 'Treat contradictions as the raw material of invention, not as a dead end.' },
-        { title: 'Bisociation', body: 'Cross ideas from distant fields. Physiology meets software, research meets business.' },
-        { title: 'Game theory', body: 'Read the incentives of everyone involved before deciding the move.' },
-        { title: 'Shortest path', body: 'Find the critical path first. Everything else is optional.' },
+        { title: 'First principles', body: 'Break the problem down to what is certainly true. Rebuild from there.' },
+        { title: 'Abduction', body: 'Start from the surprising fact. Guess the most plausible cause, then test it.' },
+        { title: 'Inverse problems', body: 'Start from the outcome you want. Work backwards to the cause.' },
+        { title: 'Feedback theory', body: 'Design the loop, not the single step: what is measured, and what corrects it?' },
+        { title: 'TRIZ', body: 'Contradictions are the raw material of invention, not a dead end.' },
+        { title: 'Bisociation', body: 'Cross distant fields — physiology × software, research × business.' },
+        { title: 'Game theory', body: "Read everyone's incentives before choosing the move." },
+        { title: 'Shortest path', body: 'Find the critical path first. The rest is optional.' },
       ],
     },
     hobbies: [
@@ -145,10 +155,20 @@ export const en: Copy = {
   skills: {
     knowledgeTitle: 'Knowledge',
     knowledge: ['Information Engineering', 'Data Analysis', 'Control Engineering', 'Biomedical Engineering', 'Physiology'],
+    measuredTitle: 'Measured at once, every session',
+    measured: [
+      'ECG',
+      'Pulse wave',
+      'Respiration',
+      'Skin conductance',
+      'Pupil diameter',
+      'Continuous blood pressure',
+      'Wearable ECG & PPG',
+    ],
     toolsTitle: 'Tools',
     tools: [
-      { title: 'Build, Analyze', items: ['C (5 years)', 'MATLAB (3 years)', 'Python (3 years)', 'LabVIEW (Basic)'] },
-      { title: 'AI-assisted development', items: ['AI agents, Markdown, Vibe coding'] },
+      { title: 'Build, Analyze', items: ['C (5 years)', 'MATLAB (3 years)', 'Python (3 years)', 'LabVIEW — built the 8-channel recording system'] },
+      { title: 'AI-assisted development', items: ['AI agents / LLM-assisted development', 'Markdown'] },
       { title: 'Visualize', items: ['Adobe Illustrator', 'Blender'] },
     ],
   },
@@ -165,7 +185,7 @@ export const en: Copy = {
         'Measuring and analysing physiological internal states that cannot be seen directly, then interpreting them from an engineering perspective.',
       ],
       footnote:
-        'Original paper: Katahara, Y., Iijima, A. & Tainaka, K. Acute transcutaneous auricular vagus nerve stimulation is associated with lower baroreflex sensitivity without detectable Mayer-wave coherence change: an exploratory study. {paper} 16, 30321 (2026). DOI: 10.1038/s41598-026-71625-9 — 13,000 accesses in its first two weeks.',
+        'Original paper: Katahara, Y., Iijima, A. & Tainaka, K. Acute transcutaneous auricular vagus nerve stimulation is associated with lower baroreflex sensitivity without detectable Mayer-wave coherence change: an exploratory study. {paper} 16, 30321 (2026). DOI: 10.1038/s41598-026-71625-9.',
       links: [
         { key: 'paper', label: 'Scientific Reports', url: 'https://doi.org/10.1038/s41598-026-71625-9' },
       ],
@@ -253,7 +273,7 @@ export const en: Copy = {
         milestones: [{ label: 'found a company' }, { label: 'keep it growing for one year' }],
       },
       {
-        title: 'Sustain multiple projects based on the GOALs',
+        title: 'Sustain multiple projects based on the goals',
         milestones: [{ label: 'build other companies' }, { label: 'run them without my direct work' }],
       },
       {
@@ -286,16 +306,24 @@ export const en: Copy = {
     form: {
       name: 'What can I call you?',
       contact: 'How can I connect with you?',
-      contactHint: 'e-mail, LinkedIn, X, anything that reaches you',
+      contactHint: 'e-mail, LinkedIn, X — anything that reaches you',
+      contactPlaceholder: 'e-mail or profile URL',
       source: 'Where did you find me?',
       dream: 'What is your DREAM?',
-      submit: 'Make Your Dreams Come True',
+      submit: 'Send — Make Your Dreams Come True',
       sending: 'Sending…',
       done: "Sent. Thank you! I'll get back to you soon.",
       error: 'Failed to send. Please try again later, or reach me on LinkedIn.',
+      requiredNote: '* Required',
+      note: 'Your message goes only to me — no list, no sharing. I read every message.',
     },
     letter: {
       opening: ['Thank you for your interest in me.', "I'm currently looking for my first full-time position."],
+      quick: [
+        'Roles: Research Engineer / Product Manager / Technical Project Manager / R&D',
+        'Location: Japan, nationwide / Remote',
+        'Available from April 2029',
+      ],
       facts: [
         { label: 'Available from:', values: ['April 2029'] },
         { label: 'Employment:', values: ['Full-time'] },
@@ -319,10 +347,11 @@ export const en: Copy = {
       ],
       signature: 'Yusuke Katahara',
       emailLabel: 'e-mail:',
+      cvLabel: 'CV (one page, printable):',
     },
   },
 
-  footer: { copyright: '© 2026 Yusuke Katahara' },
+  footer: { copyright: '© 2026 Yusuke Katahara', top: 'Back to top' },
 
   a11y: {
     skip: 'Skip to content',

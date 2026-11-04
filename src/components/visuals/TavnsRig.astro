@@ -18,6 +18,7 @@ const MOVED: [string, string][] = [
   ['translate(220.49 414.62)', 'translate(188 428)'], // ECG (wearable device) — 胴とケーブルに被る
   ['translate(720.07 373.56)', 'translate(726 378)'], // PPG — 右手の丸に被る
   ['translate(77.38 357.01)', 'translate(48 357)'],   // GSR — 電極パッドに被る
+  ['translate(690.06 236.92)', 'translate(664 240)'], // continuous blood pressure — 25px 化で右端からはみ出す分を内へ
 ];
 
 const svg = MOVED.reduce((acc, [from, to]) => acc.replace(from, to), raw)

@@ -1,0 +1,119 @@
+---
+/**
+ * 一枚ものの CV。本文（index）と同じ copy / config だけから組み立てる（事実の二重管理をしない）。
+ * 印刷してそのまま渡せるよう、画面でも印刷でも同じ情報が読めるレイアウトにする。
+ * 論文は Publications の通常の記載としてのみ載せる（アクセス数などの売り文句は付けない）。
+ */
+import Base from '../layouts/Base.astro';
+import { en as copy } from '../data/copy.en';
+import { SOCIAL, EMAIL_PARTS } from '../site.config';
+
+const tavns = copy.projects.find((p) => p.id === 'tavns')!;
+const veffect = copy.projects.find((p) => p.id === 'v-effect')!;
+const paper = tavns.links?.find((l) => l.key === 'paper');
+const appstore = veffect.links?.find((l) => l.key === 'appstore');
+const webapp = veffect.links?.find((l) => l.key === 'web');
+---
+
+<Base title="CV — Yusuke Katahara" description="Curriculum vitae of Yusuke Katahara — doctoral student in neuroengineering at Niigata University (taVNS research).">
+  <main id="main" class="cv">
+    <header class="cv-head">
+      <p class="cv-kicker">Curriculum Vitae</p>
+      <h1 class="cv-name">{copy.who.name}</h1>
+      <p class="cv-summary">{copy.hero.summary}</p>
+      <ul class="cv-contact">
+        <li><span data-email data-u={EMAIL_PARTS.user} data-d={EMAIL_PARTS.domain}>{EMAIL_PARTS.user} [at] {EMAIL_PARTS.domain.replace('.', ' [dot] ')}</span></li>
+        <li><a href={SOCIAL.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href={SOCIAL.github} target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href={SOCIAL.researchmap} target="_blank" rel="noopener">researchmap</a></li>
+        <li><a href="/">bigdogdig.com</a></li>
+      </ul>
+    </header>
+
+    <section class="cv-sec">
+      <h2 class="cv-h2">Research</h2>
+      <p class="cv-role-line"><b>taVNS — transcutaneous auricular vagus nerve stimulation</b></p>
+      {tavns.overview.map((p) => <p>{p}</p>)}
+      {tavns.role.map((p) => <p>{p}</p>)}
+      <p>
+        To do this I designed and built an 8-channel recording system (LabVIEW): ECG, pulse wave,
+        respiration, skin conductance, pupil diameter, continuous blood pressure, and wearable ECG &amp; PPG,
+        all on one clock.
+      </p>
+    </section>
+
+    <section class="cv-sec">
+      <h2 class="cv-h2">Education &amp; Career</h2>
+      <dl class="cv-timeline">
+        {copy.who.career.map((c) => (
+          <div class="cv-row">
+            <dt>{c.year}</dt>
+            <dd>{c.label}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="cv-sec">
+      <h2 class="cv-h2">Publications</h2>
+      <p class="cv-pub">
+        Katahara, Y., Iijima, A. &amp; Tainaka, K. Acute transcutaneous auricular vagus nerve stimulation is
+        associated with lower baroreflex sensitivity without detectable Mayer-wave coherence change:
+        an exploratory study. <i>Scientific Reports</i> 16, 30321 (2026).
+        {paper && <>DOI: <a href={paper.url} target="_blank" rel="noopener">10.1038/s41598-026-71625-9</a></>}
+      </p>
+    </section>
+
+    <section class="cv-sec">
+      <h2 class="cv-h2">Projects</h2>
+      <p class="cv-role-line"><b>V EFFECT — habit-forming social app</b></p>
+      <p>
+        I set up the initial development environment and supported a friend with no dev experience,
+        introducing Git and AI tools and helping launch it. Now he leads development and operations,
+        while I advise on security and tech issues, and do case research.
+        The app is released on the {appstore && <a href={appstore.url} target="_blank" rel="noopener">App Store</a>} and
+        on the {webapp && <a href={webapp.url} target="_blank" rel="noopener">web</a>}.
+      </p>
+    </section>
+
+    <section class="cv-sec">
+      <h2 class="cv-h2">Skills</h2>
+      <dl class="cv-skills">
+        <div class="cv-row">
+          <dt>Knowledge</dt>
+          <dd>{copy.skills.knowledge.join(' / ')}</dd>
+        </div>
+        {copy.skills.tools.map((g) => (
+          <div class="cv-row">
+            <dt>{g.title}</dt>
+            <dd>{g.items.join(' / ')}</dd>
+          </div>
+        ))}
+        <div class="cv-row">
+          <dt>Measurement</dt>
+          <dd>{copy.skills.measured.join(' / ')}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="cv-sec">
+      <h2 class="cv-h2">Availability</h2>
+      <dl class="cv-skills">
+        {copy.contact.letter.facts.map((f) => (
+          <div class="cv-row">
+            <dt>{f.label.replace(':', '')}</dt>
+            <dd>{f.values.join(' — ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <p class="cv-actions">
+      <button class="btn" type="button" onclick="window.print()">
+        <span class="btn-arrow" aria-hidden="true">▶</span>
+        <span class="btn-label">Print / save as PDF</span>
+      </button>
+      <a class="cv-back" href="/">← Back to the portfolio</a>
+    </p>
+  </main>
+</Base>

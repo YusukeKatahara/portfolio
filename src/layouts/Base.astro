@@ -11,6 +11,7 @@ const copy = en;
 const title = Astro.props.title ? `${Astro.props.title} | bigdogdig.com` : copy.meta.title;
 const description = Astro.props.description ?? copy.meta.description;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og.png', Astro.site);
 ---
 
 <!doctype html>
@@ -28,6 +29,14 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Yusuke Katahara — bigdogdig.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     {/* Impact はローカルフォント（Windows/macOS）。無い端末向けに最も近い Anton を配信する */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

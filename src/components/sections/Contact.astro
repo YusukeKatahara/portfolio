@@ -25,20 +25,22 @@ const tabs = [
         data-done={copy.form.done}
         data-error={copy.form.error}
       >
+        <p class="form-required-note">{copy.form.requiredNote}</p>
         <label class="field field--short">
-          <span class="field-label">{copy.form.name}</span>
+          <span class="field-label">{copy.form.name}<span class="req" aria-hidden="true"> *</span></span>
           <input type="text" name="name" required autocomplete="name" />
         </label>
         <label class="field field--short">
-          <span class="field-label">{copy.form.contact}</span>
-          <input type="text" name="contact" required placeholder={copy.form.contactHint} autocomplete="email" />
+          <span class="field-label">{copy.form.contact}<span class="req" aria-hidden="true"> *</span></span>
+          <input type="text" name="contact" required placeholder={copy.form.contactPlaceholder} autocomplete="email" />
+          <span class="field-hint">{copy.form.contactHint}</span>
         </label>
         <label class="field field--short">
           <span class="field-label">{copy.form.source}</span>
           <input type="text" name="source" />
         </label>
         <label class="field">
-          <span class="field-label">{copy.form.dream}</span>
+          <span class="field-label">{copy.form.dream}<span class="req" aria-hidden="true"> *</span></span>
           <textarea name="dream" rows="5" required></textarea>
         </label>
         {/* honeypot: 人間には見えない。bot が埋めると弾かれる */}
@@ -50,10 +52,14 @@ const tabs = [
           </button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </div>
+        <p class="form-note">{copy.form.note}</p>
       </form>
     </div>
 
     <div slot="recruiters" class="letter">
+      <ul class="letter-quick" aria-label="Summary">
+        {copy.letter.quick.map((q) => <li>{q}</li>)}
+      </ul>
       {copy.letter.opening.map((l) => <p class="body">{l}</p>)}
       <dl class="letter-facts">
         {copy.letter.facts.map((f) => (
@@ -68,6 +74,10 @@ const tabs = [
       <p class="body letter-email">
         {copy.letter.emailLabel}
         <span data-email data-u={EMAIL_PARTS.user} data-d={EMAIL_PARTS.domain}>{EMAIL_PARTS.user} [at] {EMAIL_PARTS.domain.replace('.', ' [dot] ')}</span>
+      </p>
+      <p class="body letter-cv">
+        {copy.letter.cvLabel}
+        <a href="/cv/">bigdogdig.com/cv</a>
       </p>
     </div>
   </Tabs>

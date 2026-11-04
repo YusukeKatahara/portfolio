@@ -1,0 +1,28 @@
+---
+/**
+ * フッター。SNS とメール、CV へのリンク、トップへ戻る導線を置く。
+ * 連絡先は本文（Contact）と同じ config / copy から引く。
+ */
+import { SOCIAL, EMAIL_PARTS } from '../site.config';
+import type { Copy } from '../data/types';
+
+interface Props { copy: Copy }
+const { copy } = Astro.props;
+---
+
+<footer class="foot">
+  <div class="foot-inner">
+    <p class="foot-name">{copy.who.name} <span class="foot-dash" aria-hidden="true">—</span> bigdogdig.com</p>
+    <ul class="foot-links">
+      <li><a href={SOCIAL.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href={SOCIAL.github} target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href={SOCIAL.researchmap} target="_blank" rel="noopener">researchmap</a></li>
+      <li><a href="/cv/">CV</a></li>
+      <li><span data-email data-u={EMAIL_PARTS.user} data-d={EMAIL_PARTS.domain}>{EMAIL_PARTS.user} [at] {EMAIL_PARTS.domain.replace('.', ' [dot] ')}</span></li>
+    </ul>
+    <div class="foot-base">
+      <p>{copy.footer.copyright}</p>
+      <a class="foot-top" href="#hero">{copy.footer.top} <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>

@@ -302,7 +302,7 @@ body.nav-on .topbar { transform: none; }
   --gap-under: clamp(1.4rem, 4vh, 2.6rem);
   /* 3行の塊とその下の情報に共通の幅。文字サイズはこの幅から決まるので、
      ここを変えると HERO 全体の大きさが変わる */
-  --hero-w: min(100%, 80rem, 86vh);
+  --hero-w: min(100%, 84rem, 80vh);
   justify-content: center;
 }
 
@@ -358,9 +358,27 @@ body.nav-on .topbar { transform: none; }
 @keyframes heroGround { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 .hero-under { position: relative; z-index: 1; width: var(--hero-w); margin-top: var(--gap-under); }
-/* タグラインの右にソーシャルリンクを置き、下端で揃える */
+/* 名前の右にソーシャルリンクを置き、下端で揃える */
 .hero-meta { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 0.8rem 2.5rem; }
+.hero-name { font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.05; }
 .hero-tagline { font-size: var(--fs-lead-soft); line-height: 1.35; max-width: 30ch; }
+.hero-summary { font-size: var(--fs-lead-soft); line-height: 1.45; max-width: 62ch; margin-top: 0.9rem; }
+/* 実績の帯: 数字（ Impact ）＋短い説明。地面の下＝反転域でも読めるよう罫は currentColor */
+.hero-highlights {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem 2rem;
+  margin-top: 1.3rem;
+  padding-top: 0.9rem;
+  border-top: 2px solid currentColor;
+}
+.hero-highlights li { display: grid; gap: 0.15rem; align-content: start; }
+.hero-hl-value { font-size: var(--fs-h3); line-height: 1.1; white-space: nowrap; }
+.hero-hl-label { font-size: var(--fs-small); line-height: 1.45; }
+@media (max-width: 767px) {
+  .hero-highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hero-hl-value { white-space: normal; }
+}
 .hero-social { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; font-size: var(--fs-small); letter-spacing: 0.08em; }
 .hero-social a { text-decoration: none; border-bottom: 2px solid var(--accent); padding-bottom: 0.1em; }
 .hero-social a:hover { color: var(--accent); }
@@ -377,6 +395,45 @@ body.nav-on .topbar { transform: none; }
   gap: 1rem clamp(2.5rem, 8vw, 9rem);
   margin: clamp(1.5rem, 5vh, 3.5rem) 0;
 }
+
+/* 名前・三つ組みとポートレートを横に置く。写真が来るまではモノグラムパネル */
+.who-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem clamp(2rem, 6vw, 6rem);
+}
+.who-head .who-name { text-align: left; }
+.who-head .triad { justify-content: flex-start; margin-bottom: 0; }
+.portrait { width: clamp(11rem, 20vw, 15.5rem); margin: 0; }
+.portrait-img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border: 3px solid var(--ink); }
+.portrait-mono {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border: 3px solid var(--ink);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.portrait-initials { font-size: clamp(4.2rem, 7.5vw, 6.2rem); line-height: 1; padding-bottom: 1.6rem; }
+.portrait-dot {
+  position: absolute; top: 0.85rem; right: 0.85rem;
+  width: 0.8rem; height: 0.8rem; border-radius: 50%;
+  background: var(--accent);
+}
+.portrait-strip {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: var(--ink); color: var(--bg);
+  text-align: center;
+  font-size: var(--fs-small); letter-spacing: 0.18em;
+  padding: 0.45em 0;
+}
+@media (max-width: 900px) {
+  .who-head { grid-template-columns: 1fr; justify-items: center; }
+  .who-head .who-name { text-align: center; }
+  .who-head .triad { justify-content: center; }
+  .portrait { width: min(13rem, 62vw); }
+}
 .triad li { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .triad-verb { font-size: var(--fs-h3); line-height: 1.2; }
 .triad-noun { font-size: var(--fs-body); }
@@ -387,6 +444,8 @@ body.nav-on .topbar { transform: none; }
 .timeline-svg text { fill: currentColor; font-family: inherit; }
 .timeline-svg-year { font-size: 30px; }
 .timeline-svg-label { font-size: 23px; }
+.timeline-svg-now { font-size: 26px; }
+.timeline-svg .tl-now-dot { fill: var(--accent); }
 .timeline-list { display: none; }
 @media (max-width: 767px) {
   .timeline-svg { display: none; }
@@ -402,10 +461,15 @@ body.nav-on .topbar { transform: none; }
 .style-list li { display: grid; gap: 0.1rem; }
 .style-title { font-size: var(--fs-lead-soft); line-height: 1.25; }
 .style-body { font-size: var(--fs-body); line-height: 1.5; }
-.hobby-list { display: grid; gap: 1rem; }
-.hobby-list li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.3rem 1.2rem; }
-.hobby-label { font-size: var(--fs-lead); line-height: 1.2; }
-.hobby-note { font-size: var(--fs-body); color: var(--muted); }
+/* 趣味はチップとして均等に扱う。note の有無で見た目が変わらないようにする */
+.hobby-list { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.hobby-list li {
+  display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.9rem;
+  border: 2px solid var(--ink);
+  padding: 0.45em 1em 0.55em;
+}
+.hobby-label { font-size: var(--fs-lead-soft); line-height: 1.2; }
+.hobby-note { font-size: var(--fs-small); color: var(--muted); }
 
 /* ============================================================
    ABOUT ME — How I work / What I do
@@ -446,6 +510,7 @@ body.nav-on .topbar { transform: none; }
    ============================================================ */
 .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem clamp(2rem, 6vw, 7rem); }
 .skills-col .h2 { margin-bottom: 0.4em; }
+.skills-sub { margin: 1.8rem 0 0.4em; }
 .tool-group { margin-bottom: 1.6rem; }
 .screen--skills .vis--wide {
   align-self: center;
@@ -554,8 +619,11 @@ body.nav-on .topbar { transform: none; }
    ============================================================ */
 .contact-form { display: grid; gap: 1.1rem; max-width: 64rem; }
 .field { display: grid; gap: 0.3rem; }
-.field--short { max-width: 26rem; }
+.field--short { max-width: 34rem; }
 .field-label { font-size: var(--fs-body); line-height: 1.3; }
+.req { color: var(--accent); }
+.field-hint { font-size: var(--fs-small); color: var(--muted); }
+.form-required-note { font-size: var(--fs-small); color: var(--muted); letter-spacing: 0.06em; }
 .contact-form input, .contact-form textarea {
   width: 100%;
   border: 1.5px solid var(--ink);
@@ -570,6 +638,11 @@ body.nav-on .topbar { transform: none; }
 .form-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 1rem 1.5rem; margin-top: 0.4rem; }
 .form-status { font-size: var(--fs-body); min-height: 1.5em; }
 .form-status[data-state='error'] { color: #b3261e; }
+.form-note { font-size: var(--fs-small); color: var(--muted); margin-top: 0.9rem; max-width: 40rem; line-height: 1.6; }
+
+/* リクルーター向け手紙: 冒頭のクイックサマリ（職種・勤務地・開始時期） */
+.letter-quick { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.6em; }
+.letter-quick li { border: 2px solid var(--ink); padding: 0.3em 0.9em 0.4em; font-size: var(--fs-body); line-height: 1.45; }
 
 .btn {
   display: inline-flex; align-items: center; gap: 0.7em;
@@ -591,17 +664,71 @@ body.nav-on .topbar { transform: none; }
 .letter-fact dt, .letter-fact dd { margin: 0; }
 .letter-signature { margin-top: 1.2em; }
 .letter-email { margin-top: 1.2em; }
+.letter-cv { margin-top: 0.4em; }
 .letter-email [data-email] { margin-left: 0.5em; }
+
+/* ============================================================
+   CV（/cv/）— 印刷して渡せる一枚。本文は読み物としてサンセリフ、見出しだけ Impact で揃える
+   ============================================================ */
+.cv {
+  max-width: 58rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vh, 4rem) var(--pad-x) 4rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  letter-spacing: 0;
+  word-spacing: 0;
+  line-height: 1.65;
+}
+.cv h1, .cv h2, .cv-kicker { font-family: var(--font); letter-spacing: 0.015em; }
+.cv-kicker { font-size: var(--fs-small); letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+.cv-name { font-size: clamp(2.4rem, 5.5vw, 4rem); line-height: 1.05; margin-top: 0.2em; }
+.cv-summary { font-size: 1.08em; max-width: 44rem; margin-top: 0.7em; }
+.cv-contact {
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.8rem;
+  margin-top: 1.2rem; padding-top: 1rem;
+  border-top: 3px solid var(--ink);
+  font-size: 0.98em;
+}
+.cv-sec { margin-top: 2.2rem; }
+.cv-h2 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); line-height: 1.15; border-bottom: 2px solid var(--ink); padding-bottom: 0.18em; margin-bottom: 0.7em; }
+.cv-sec p { margin-top: 0.45em; max-width: 46rem; }
+.cv-role-line { margin-top: 0.2em; }
+.cv-timeline, .cv-skills { display: grid; gap: 0.35rem; }
+.cv-row { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 0.3rem 1.5rem; }
+.cv-row dt { font-weight: 700; }
+.cv-row dd { margin: 0; }
+.cv-pub { max-width: 46rem; }
+.cv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 3rem; }
+.cv-back { font-family: var(--font); letter-spacing: 0.03em; }
+@media (max-width: 640px) {
+  .cv-row { grid-template-columns: 1fr; gap: 0; }
+  .cv-row dd { margin-bottom: 0.4rem; }
+}
+
+@media print {
+  @page { margin: 16mm; }
+  .skip, .cv-actions { display: none !important; }
+  .cv { max-width: none; padding: 0; font-size: 11.5pt; }
+  .cv a { text-decoration: none; }
+  .cv-sec { break-inside: avoid; }
+}
 
 /* ============================================================
    footer / 404
    ============================================================ */
 .foot {
-  padding: 2rem var(--pad-x) 2.5rem;
-  font-size: var(--fs-small);
-  letter-spacing: 0.12em;
-  color: var(--muted);
-  text-align: center;
+  padding: 2.6rem var(--pad-x) 3rem;
+  border-top: 3px solid var(--ink);
+}
+.foot-inner { max-width: var(--content-max); }
+.foot-name { font-size: var(--fs-h3); line-height: 1.15; }
+.foot-dash { color: var(--muted); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 0.5rem 2.2rem; margin-top: 1rem; font-size: var(--fs-lead-soft); }
+.foot-links a { text-decoration: underline; text-underline-offset: 0.18em; }
+.foot-base {
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem;
+  margin-top: 2.4rem;
+  font-size: var(--fs-small); letter-spacing: 0.08em; color: var(--muted);
 }
 @media (min-width: 768px) { .foot { padding-left: calc(var(--nav-w) + var(--pad-x)); } }
 
@@ -646,13 +773,24 @@ body.nav-on .topbar { transform: none; }
 /* WHY THE EAR: 侵襲的な VNS と taVNS を実物の図で並べる（説明図ではないので描き直さない） */
 .vis--why { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.6rem, 2vw, 1.4rem); align-items: start; }
 .why-shot { text-align: center; }
+/* 実物の図は「資料」として額装する。細い黒枠で締めると論文の図版らしくなる */
+.why-shot img { border: 2px solid var(--ink); background: #fff; }
 .why-label { font-size: var(--fs-lead-soft); line-height: 1.15; margin-top: 0.35em; }
 .why-label--ac { color: var(--accent); }
 .why-note { font-size: var(--fs-small); line-height: 1.3; }
 
 /* THE RIG: 研究で使っている図をそのまま取り込む。
-   ラベルだけはページのフォントで置き直す（原図の 12px はこの表示幅では読めない） */
-.vis--rig text { font-family: var(--font); font-size: 20px; letter-spacing: 0.01em; }
+   ラベルだけはページのフォントで置き直す（原図の 12px はこの表示幅では読めない）。
+   25px まで大きくし、配線や色面の上でも読めるよう白いハロ（縁取り）を付ける */
+.vis--rig text {
+  font-family: var(--font);
+  font-size: 25px;
+  letter-spacing: 0.01em;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
 
 /* THE INSTRUMENT: 4 つの波形が一斉に走り出し、そのあと STIM が点く */
 .js .vis--panel .v-trace { stroke-dasharray: 400; stroke-dashoffset: 400; }
@@ -661,11 +799,12 @@ body.nav-on .topbar { transform: none; }
 .js .vis--panel.is-in .v-stim { animation: vFade 0.5s 1.5s ease-out forwards; }
 
 /* V EFFECT（実物）: この図だけ SVG ではなくアイコン画像そのもの。
-   隣の図と縦横比を揃えたいので 16:9 の枠の中央に正方形で置く */
-.vis--app { display: grid; place-items: center; aspect-ratio: 16 / 9; }
-.app-icon { width: auto; height: 100%; max-width: 100%; border-radius: 22%; }
+   アイコンが版面を支配しないよう、表示サイズに上限を付けて中央に置く */
+.vis--app { display: grid; place-items: center; }
+.app-icon { width: min(58%, 13.5rem); height: auto; border-radius: 22%; }
 
 /* V EFFECT: 棒が下から立ち上がり、勝ちの点が順に灯る */
+.vis--veffect .v-bars rect { fill: var(--ink); }
 .vis--veffect .v-bars rect { transform-box: fill-box; transform-origin: bottom; }
 .vis--veffect .v-nodes circle, .vis--veffect .v-peak { transform-box: fill-box; transform-origin: center; }
 .js .vis--veffect .v-trend { stroke-dasharray: 960; stroke-dashoffset: 960; }
@@ -728,6 +867,7 @@ body.nav-on .topbar { transform: none; }
 .js .timeline.is-in .flag:nth-of-type(3) { animation-delay: 0.24s; }
 .js .timeline.is-in .flag:nth-of-type(4) { animation-delay: 0.36s; }
 .js .timeline.is-in .flag:nth-of-type(5) { animation-delay: 0.48s; }
+.js .timeline.is-in .flag:nth-of-type(6) { animation-delay: 0.6s; }
 @keyframes vFlag { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 
 /* ============================================================

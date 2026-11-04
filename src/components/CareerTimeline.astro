@@ -2,29 +2,50 @@
 /**
  * 経歴の年表。緩やかに登る薄い地面（くさび形）に旗を立て、右端で「現在」の崖が立ち上がる。
  * PC: SVG で描画。モバイル: 縦のリストに切り替える（同じデータ）。
+ *
+ * ラベルは長いものを語単位で折り返し、上下交互に置く。
+ * 2026 年の 3 点（03 / 04 / 10）が右に密集しても重ならないよう、
+ * 折り返し幅と旗の間隔は下の幾何計算で担保する（検証は REFINEMENT_LOG の Pass 5）。
  */
 import type { CareerPoint } from '../data/types';
 
 interface Props { points: CareerPoint[] }
 const { points } = Astro.props;
 
-// ---- SVG ジオメトリ（viewBox 1200×400）----
+// ---- SVG ジオメトリ（viewBox 1200×430）----
 const W = 1200;
-const H = 400;
-const groundL = 300;      // 左端の地面上辺 y
-const groundR = 250;      // 崖手前の地面上辺 y
+const H = 430;
+const groundL = 310;      // 左端の地面上辺 y
+const groundR = 260;      // 崖手前の地面上辺 y
 const thickL = 6;         // 地面の厚み（左）
 const thickR = 32;        // 地面の厚み（右）
 const cliffX = 1110;      // 崖の立ち上がり x
 const cliffTop = 70;
-const xs = [70, 400, 660, 860, 1010]; // 旗の x（点数が違う場合は等間隔に補間）
 const n = points.length;
-const flagX = (i: number) => (n === xs.length ? xs[i] : 60 + (i * (cliffX - 140)) / Math.max(1, n - 1));
+const flagX = (i: number) => 70 + (i * (cliffX - 140)) / Math.max(1, n - 1);
 const groundY = (x: number) => groundL + ((groundR - groundL) * x) / cliffX;
 const thickAt = (x: number) => thickL + ((thickR - thickL) * x) / cliffX;
 const poleH = 96;
 const flagW = 46;
 const flagH = 40;
+const LINE_H = 27;        // ラベルの行間（viewBox 単位）
+
+/** ラベルを語単位で折り返す（最大 maxChars 文字/行）。長い論文ラベルが横に伸びて隣と衝突するのを防ぐ */
+function wrapLabel(label: string, maxChars = 18): string[] {
+  const words = label.split(' ');
+  const lines: string[] = [];
+  let cur = '';
+  for (const w of words) {
+    if (cur && cur.length + 1 + w.length > maxChars) {
+      lines.push(cur);
+      cur = w;
+    } else {
+      cur = cur ? `${cur} ${w}` : w;
+    }
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
 
 const groundPath = [
   `M0 ${groundL}`,
@@ -43,6 +64,9 @@ const groundPath = [
   <svg class="timeline-svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="timeline-desc" focusable="false">
     <desc id="timeline-desc">{points.map((p) => `${p.year}: ${p.label}`).join('. ')}</desc>
     <path d={groundPath} fill="currentColor" />
+    {/* 崖の上が「現在」。紫のドット（＝いま居る場所）と言葉で意味づける */}
+    <circle class="tl-now-dot" cx={cliffX + 50} cy={cliffTop} r="9" />
+    <text class="timeline-svg-now" x={cliffX + 50} y={cliffTop - 22} text-anchor="middle">NOW</text>
     {points.map((p, i) => {
       const x = flagX(i);
       const gy = groundY(x);
@@ -50,14 +74,18 @@ const groundPath = [
       const above = i % 2 === 1; // ラベルを上下交互に
       const anchor = i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle';
       const tx = i === 0 ? x - 8 : i === n - 1 ? x + 8 : x;
-      const y1 = above ? top - 44 : gy + thickAt(x) + 36;
-      const y2 = y1 + 28;
+      const lines = wrapLabel(p.label);
+      // 上側: 一番下の行が旗の少し上に来るよう、行数ぶん遡って積む
+      // 下側: 年 → ラベルの順に下へ積む
+      const yearY = above ? top - 7 - lines.length * LINE_H : gy + thickAt(x) + 38;
       return (
         <g class="flag">
           <rect x={x - 4} y={top} width="8" height={poleH} fill="currentColor" />
           <polygon points={`${x - 4},${top} ${x - 4 - flagW},${top + flagH / 2} ${x - 4},${top + flagH}`} fill="currentColor" />
-          <text class="timeline-svg-year" x={tx} y={y1} text-anchor={anchor}>{p.year}</text>
-          <text class="timeline-svg-label" x={tx} y={y2} text-anchor={anchor}>{p.label}</text>
+          <text class="timeline-svg-year" x={tx} y={yearY} text-anchor={anchor}>{p.year}</text>
+          {lines.map((line, li) => (
+            <text class="timeline-svg-label" x={tx} y={yearY + (li + 1) * LINE_H} text-anchor={anchor}>{line}</text>
+          ))}
         </g>
       );
     })}

@@ -42,7 +42,15 @@ export type Goal = { title: string; milestones: Milestone[] };
 export type Copy = {
   meta: { title: string; description: string };
   nav: NavGroup[];
-  hero: { lines: string[]; tagline: string; social: { label: string; key: 'linkedin' | 'github' | 'researchmap' }[] };
+  hero: {
+    lines: string[];
+    name: string;
+    tagline: string;
+    summary: string;
+    highlights: { value: string; label: string }[];
+    cvLabel: string;
+    social: { label: string; key: 'linkedin' | 'github' | 'researchmap' }[];
+  };
   who: {
     name: string;
     triad: { verb: string; noun: string }[];
@@ -60,7 +68,11 @@ export type Copy = {
     recruiters: { steps: { title: string; body: string }[] };
     caseStudy: { prefix: string; label: string; target: string };
   };
-  skills: { knowledgeTitle: string; knowledge: string[]; toolsTitle: string; tools: SkillGroup[] };
+  skills: {
+    knowledgeTitle: string; knowledge: string[];
+    measuredTitle: string; measured: string[];
+    toolsTitle: string; tools: SkillGroup[];
+  };
   projects: Project[];
   goals: { kicker: string; headline: string; pillars: Pillar[] };
   milestones: { goals: Goal[] };
@@ -68,17 +80,20 @@ export type Copy = {
     title: string;
     tabs: { clients: string; recruiters: string };
     form: {
-      name: string; contact: string; contactHint: string; source: string; dream: string;
+      name: string; contact: string; contactHint: string; contactPlaceholder: string; source: string; dream: string;
       submit: string; sending: string; done: string; error: string;
+      requiredNote: string; note: string;
     };
     letter: {
       opening: string[];
+      quick: string[];
       facts: { label: string; values: string[] }[];
       closing: string[];
       signature: string;
       emailLabel: string;
+      cvLabel: string;
     };
   };
-  footer: { copyright: string };
+  footer: { copyright: string; top: string };
   a11y: { skip: string; nav: string; menu: string; close: string; done: string; todo: string };
 };
