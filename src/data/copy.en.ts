@@ -68,6 +68,7 @@ export const en: Copy = {
       { year: '2024', label: 'Early graduation (in 3 years)' },
       { year: '2026.03', label: "Master's degree" },
       { year: '2026.04', label: 'Doctoral student' },
+      { year: '2026.10', label: 'First-author paper published in Scientific Reports' },
     ],
     style: {
       lead: 'How I think, whatever the problem is.',
@@ -163,7 +164,11 @@ export const en: Copy = {
       role: [
         'Measuring and analysing physiological internal states that cannot be seen directly, then interpreting them from an engineering perspective.',
       ],
-      footnote: 'Original papers: TBD (under review)',
+      footnote:
+        'Original paper: Katahara, Y., Iijima, A. & Tainaka, K. Acute transcutaneous auricular vagus nerve stimulation is associated with lower baroreflex sensitivity without detectable Mayer-wave coherence change: an exploratory study. {paper} 16, 30321 (2026). DOI: 10.1038/s41598-026-71625-9 — 13,000 accesses in its first two weeks.',
+      links: [
+        { key: 'paper', label: 'Scientific Reports', url: 'https://doi.org/10.1038/s41598-026-71625-9' },
+      ],
       plates: [
         {
           visual: 'tavns-why',
@@ -234,7 +239,7 @@ export const en: Copy = {
         title: 'Earn a Ph.D.',
         milestones: [
           { label: 'be a doctoral student', done: true },
-          { label: 'publish first paper' },
+          { label: 'publish first paper', done: true },
           { label: 'publish more papers' },
           { label: 'earn a Ph.D.' },
         ],
@@ -302,7 +307,7 @@ export const en: Copy = {
         {
           label: "I'm interested in:",
           values: [
-            'Occupations: Research Engineer / Technical Project Manager / R&D',
+            'Occupations: Research Engineer / Product Manager / Technical Project Manager / R&D',
             'Fields: Healthcare / Medical Technology / others',
           ],
         },

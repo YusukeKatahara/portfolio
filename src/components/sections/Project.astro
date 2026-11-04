@@ -77,5 +77,11 @@ function splitLinks(text: string) {
     </div>
   </div>
 
-  {project.footnote && <p class="project-footnote body">{project.footnote}</p>}
+  {project.footnote && (
+    <p class="project-footnote body">
+      {splitLinks(project.footnote).map((part) =>
+        part.t === 'text' ? part.v : <a href={part.url} target="_blank" rel="noopener">{part.label}</a>
+      )}
+    </p>
+  )}
 </Screen>
