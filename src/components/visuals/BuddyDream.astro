@@ -5,18 +5,55 @@ const { class: cls } = Astro.props;
 ---
 
 <Figure kind="buddy" class={cls} viewBox="0 0 1280 540"
-  title="Two people standing side by side, both looking at the same big dream.">
-  <circle class="ac v-dream" cx="980" cy="150" r="128" />
-  <text class="bg v-dream-label" x="980" y="138" font-size="52" text-anchor="middle">ONE</text>
-  <text class="bg v-dream-label" x="980" y="200" font-size="52" text-anchor="middle">DREAM</text>
+  title="Two people digging the same hole together, finding one gem at the bottom.">
+  {/* 地面 */}
+  <rect x="90" y="400" width="1100" height="8" />
 
-  <path class="v-gaze" d="M348 228 L852 172" fill="none" stroke="currentColor" stroke-width="8"
-    stroke-dasharray="22 16" stroke-linecap="round" />
+  <g transform="translate(195 0)">
+  {/* 掘った土の山 */}
+  <path d="M158 400 C182 370 224 370 248 400 Z" />
+  <path d="M642 400 C666 370 708 370 732 400 Z" />
 
+  {/* 穴（背景色で抜いた台形） */}
+  <path class="bg" d="M352 400 L538 400 L492 492 L398 492 Z" />
+  <path d="M352 400 L398 492 L492 492 L538 400" fill="none" stroke="currentColor" stroke-width="7" stroke-linejoin="round" />
+
+  {/* 人物（家のピクトグラム: 頭＋丸い体） */}
   <g class="v-people">
-    <g><circle cx="250" cy="282" r="54" /><path d="M170 442 C170 372 202 340 250 340 C298 340 330 372 330 442 Z" /></g>
-    <g><circle cx="430" cy="282" r="54" /><path d="M350 442 C350 372 382 340 430 340 C478 340 510 372 510 442 Z" /></g>
+    <g><circle cx="330" cy="244" r="54" /><path d="M250 400 C250 330 282 298 330 298 C378 298 410 330 410 400 Z" /></g>
+    <g><circle cx="560" cy="244" r="54" /><path d="M480 400 C480 330 512 298 560 298 C608 298 640 330 640 400 Z" /></g>
   </g>
 
-  <text x="340" y="506" font-size="42" text-anchor="middle">YOU AND ME</text>
+  {/* シャベル: 交互に上下して掘り続ける */}
+  <g class="v-dig v-dig--a">
+    <line class="bgs" x1="374" y1="316" x2="438" y2="428" stroke-width="25" stroke-linecap="round" />
+    <line x1="374" y1="316" x2="438" y2="428" stroke="currentColor" stroke-width="13" stroke-linecap="round" />
+    <polygon points="414,412 458,426 446,472 418,454" />
+    <circle cx="374" cy="316" r="11" />
+  </g>
+  <g class="v-dig v-dig--b">
+    <line class="bgs" x1="516" y1="316" x2="452" y2="428" stroke-width="25" stroke-linecap="round" />
+    <line x1="516" y1="316" x2="452" y2="428" stroke="currentColor" stroke-width="13" stroke-linecap="round" />
+    <polygon points="476,412 432,426 444,472 472,454" />
+    <circle cx="516" cy="316" r="11" />
+  </g>
+
+  {/* 跳ねる土 */}
+  <g class="v-dirt">
+    <circle cx="486" cy="404" r="8" /><circle cx="404" cy="388" r="7" /><circle cx="470" cy="376" r="6" />
+  </g>
+
+  {/* 見つけたもの: 紫はこの一点だけ */}
+  <g class="v-gem">
+    <polygon class="ac" points="445,424 476,455 445,486 414,455" />
+    <path class="bgs" d="M414 455 L476 455 M445 424 L430 455 L445 486 M445 424 L460 455 L445 486" fill="none" stroke-width="4" />
+  </g>
+  <g class="v-spark">
+    <line class="acs" x1="445" y1="404" x2="445" y2="386" stroke-width="7" stroke-linecap="round" />
+    <line class="acs" x1="402" y1="424" x2="389" y2="411" stroke-width="7" stroke-linecap="round" />
+    <line class="acs" x1="488" y1="424" x2="501" y2="411" stroke-width="7" stroke-linecap="round" />
+  </g>
+
+  </g>
+  <text x="640" y="530" font-size="42" text-anchor="middle">DIG TOGETHER</text>
 </Figure>

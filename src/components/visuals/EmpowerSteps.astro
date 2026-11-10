@@ -5,22 +5,52 @@ const { class: cls } = Astro.props;
 ---
 
 <Figure kind="empower" class={cls} viewBox="0 0 1280 440"
-  title="At first you stand on a platform I built; afterwards the platform is gone and you run on your own ground.">
-  <g class="v-before">
-    <rect x="110" y="300" width="340" height="54" />
-    <circle cx="280" cy="172" r="42" />
-    <path d="M212 300 C212 240 240 214 280 214 C320 214 348 240 348 300 Z" />
-    <text x="280" y="416" font-size="48" text-anchor="middle">AT FIRST, WITH ME</text>
+  title="At first the bicycle runs with a training wheel; afterwards the training wheel lies on the ground and the bicycle runs on its own.">
+  {/* 地面 */}
+  <rect x="80" y="358" width="1120" height="9" />
+
+  {/* 左: 補助輪つき（紫はこの一点だけ） */}
+  <g class="v-before" transform="translate(215 300)" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
+    <g class="v-wheel"><circle cx="0" cy="0" r="58" /><line x1="-58" y1="0" x2="58" y2="0" /><line x1="-29" y1="-50" x2="29" y2="50" /><line x1="29" y1="-50" x2="-29" y2="50" /></g>
+    <g class="v-wheel"><circle cx="160" cy="0" r="58" /><line x1="102" y1="0" x2="218" y2="0" /><line x1="131" y1="-50" x2="189" y2="50" /><line x1="189" y1="-50" x2="131" y2="50" /></g>
+    <polyline points="0,0 67,0 43,-82 0,0" />
+    <polyline points="67,0 138,-74 160,0" />
+    <line x1="43" y1="-82" x2="134" y2="-78" />
+    <circle cx="67" cy="0" r="13" fill="currentColor" stroke="none" />
+    <line x1="22" y1="-89" x2="62" y2="-89" />
+    <line x1="126" y1="-92" x2="154" y2="-85" />
   </g>
+  <g class="v-support">
+    <line class="acs" x1="212" y1="302" x2="176" y2="338" stroke-width="9" stroke-linecap="round" />
+    <circle class="ac" cx="172" cy="341" r="17" />
+  </g>
+  <text x="295" y="424" font-size="46" text-anchor="middle">AT FIRST, WITH ME</text>
 
-  <g class="v-arrow"><rect x="540" y="250" width="90" height="34" /><polygon points="628,230 692,267 628,304" /></g>
+  {/* 矢印 */}
+  <g class="v-arrow"><rect x="520" y="250" width="90" height="34" /><polygon points="608,230 672,267 608,304" /></g>
 
+  {/* 右: 補助輪なしで走る（車輪が回る） */}
   <g class="v-after">
-    <rect x="760" y="344" width="400" height="10" />
-    <circle cx="940" cy="150" r="50" />
-    <path d="M858 344 C858 272 892 240 940 240 C988 240 1022 272 1022 344 Z" />
-    <text x="960" y="416" font-size="48" text-anchor="middle">THEN, ON YOUR OWN</text>
+    <g transform="translate(780 300)" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round">
+      <g class="v-wheel"><circle cx="0" cy="0" r="58" /><line x1="-58" y1="0" x2="58" y2="0" /><line x1="-29" y1="-50" x2="29" y2="50" /><line x1="29" y1="-50" x2="-29" y2="50" /></g>
+      <g class="v-wheel"><circle cx="160" cy="0" r="58" /><line x1="102" y1="0" x2="218" y2="0" /><line x1="131" y1="-50" x2="189" y2="50" /><line x1="189" y1="-50" x2="131" y2="50" /></g>
+      <polyline points="0,0 67,0 43,-82 0,0" />
+      <polyline points="67,0 138,-74 160,0" />
+      <line x1="43" y1="-82" x2="134" y2="-78" />
+      <circle cx="67" cy="0" r="13" fill="currentColor" stroke="none" />
+      <line x1="22" y1="-89" x2="62" y2="-89" />
+      <line x1="126" y1="-92" x2="154" y2="-85" />
+    </g>
+    <g stroke="currentColor" stroke-width="9" stroke-linecap="round">
+      <line x1="742" y1="262" x2="700" y2="262" /><line x1="730" y1="298" x2="678" y2="298" /><line x1="744" y1="330" x2="706" y2="330" />
+    </g>
   </g>
 
-  <g class="ac v-grow"><rect x="1084" y="252" width="26" height="92" /><polygon points="1097,178 1052,254 1142,254" /></g>
+  {/* 外した補助輪: 1つは立ったまま、1つは倒れて地面に */}
+  <g class="v-off">
+    <circle cx="1052" cy="340" r="18" fill="none" stroke="currentColor" stroke-width="9" />
+    <circle cx="1052" cy="340" r="4" />
+    <ellipse cx="1118" cy="352" rx="21" ry="7" fill="none" stroke="currentColor" stroke-width="7" />
+  </g>
+  <text x="905" y="424" font-size="46" text-anchor="middle">THEN, ON YOUR OWN</text>
 </Figure>

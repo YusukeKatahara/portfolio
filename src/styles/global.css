@@ -848,17 +848,29 @@ body.nav-on .topbar { transform: none; }
 .js .vis--continuity.is-in .v-rise { animation: vRise 0.8s 0.95s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 @keyframes vRise { from { opacity: 0; transform: translateY(28%); } to { opacity: 1; transform: none; } }
 
-/* HOW I WORK: 視線が夢へ流れ続ける */
-.js .vis--buddy .v-gaze { opacity: 0; }
-.js .vis--buddy.is-in .v-gaze { animation: vFade 0.6s 0.55s ease-out forwards, vFlow 1.5s 1.1s linear infinite; }
-@keyframes vFlow { to { stroke-dashoffset: -38; } }
+/* HOW I WORK: 2人で同じ穴を掘り続け、宝石が見つかる */
+.vis--buddy .v-dig { transform-box: fill-box; }
+.vis--buddy .v-dig--a { transform-origin: 6% 4%; }
+.vis--buddy .v-dig--b { transform-origin: 94% 4%; }
+.vis--buddy .v-gem { transform-box: fill-box; transform-origin: center; }
+.js .vis--buddy .v-gem { transform: scale(0); }
+.js .vis--buddy .v-spark, .js .vis--buddy .v-dirt { opacity: 0; }
+.js .vis--buddy.is-in .v-dig--a { animation: vDig 0.85s ease-in-out infinite alternate; }
+.js .vis--buddy.is-in .v-dig--b { animation: vDig 0.85s 0.42s ease-in-out infinite alternate; }
+.js .vis--buddy.is-in .v-gem { animation: vPop 0.5s 0.95s cubic-bezier(0.2, 1.5, 0.4, 1) forwards; }
+.js .vis--buddy.is-in .v-spark { animation: vFade 0.4s 1.3s ease-out forwards; }
+.js .vis--buddy.is-in .v-dirt { animation: vFade 0.4s 0.5s ease-out forwards; }
+@keyframes vDig { from { transform: rotate(-2.6deg); } to { transform: rotate(3deg); } }
 
-/* WHAT I DO: 支えがある状態 → 自分で立つ状態 の順に現れる */
-.vis--empower .v-grow { transform-box: fill-box; transform-origin: bottom; }
-.js .vis--empower .v-arrow, .js .vis--empower .v-after, .js .vis--empower .v-grow { opacity: 0; }
+/* WHAT I DO: 補助輪つき → 自分で走る → 外した補助輪、の順に現れる */
+.vis--empower .v-off { transform-box: fill-box; transform-origin: bottom; }
+.vis--empower .v-wheel { transform-box: fill-box; transform-origin: center; }
+.js .vis--empower .v-arrow, .js .vis--empower .v-after, .js .vis--empower .v-off { opacity: 0; }
 .js .vis--empower.is-in .v-arrow { animation: vFade 0.4s 0.45s ease-out forwards; }
 .js .vis--empower.is-in .v-after { animation: vFade 0.5s 0.75s ease-out forwards; }
-.js .vis--empower.is-in .v-grow { animation: vRise 0.7s 1.15s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+.js .vis--empower.is-in .v-off { animation: vRise 0.7s 1.15s cubic-bezier(0.2, 0.9, 0.3, 1) forwards; }
+.js .vis--empower.is-in .v-after .v-wheel { animation: vSpin 1.4s linear infinite; }
+@keyframes vSpin { to { transform: rotate(360deg); } }
 
 /* 経歴の年表: 旗が左から順に立つ */
 .js .timeline .flag { opacity: 0; }
